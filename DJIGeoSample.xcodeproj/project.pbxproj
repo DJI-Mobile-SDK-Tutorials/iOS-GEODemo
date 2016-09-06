@@ -1,0 +1,421 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A446D0E31D3F7DB400804A32 /* DJIAircraftAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A446D0E01D3F7DB400804A32 /* DJIAircraftAnnotation.m */; };
+		A446D0E41D3F7DB400804A32 /* DJIAircraftAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = A446D0E21D3F7DB400804A32 /* DJIAircraftAnnotationView.m */; };
+		A4B87ECE1D2A6EB600123466 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B87ECD1D2A6EB600123466 /* main.m */; };
+		A4B87ED11D2A6EB600123466 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B87ED01D2A6EB600123466 /* AppDelegate.m */; };
+		A4B87ED41D2A6EB600123466 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B87ED31D2A6EB600123466 /* RootViewController.m */; };
+		A4B87ED71D2A6EB600123466 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4B87ED51D2A6EB600123466 /* Main.storyboard */; };
+		A4B87ED91D2A6EB600123466 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4B87ED81D2A6EB600123466 /* Assets.xcassets */; };
+		A4B87EDC1D2A6EB600123466 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4B87EDA1D2A6EB600123466 /* LaunchScreen.storyboard */; };
+		A4B87EF11D2A716200123466 /* DJISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B87EEF1D2A715900123466 /* DJISDK.framework */; };
+		A4B87EF21D2A716200123466 /* DJISDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A4B87EEF1D2A715900123466 /* DJISDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A4B87EF61D2A71B200123466 /* DemoUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B87EF51D2A71B200123466 /* DemoUtility.m */; };
+		A4B87EF91D2A754000123466 /* DJIGeoDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B87EF81D2A754000123466 /* DJIGeoDemoViewController.m */; };
+		A4B87EFB1D2A756F00123466 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B87EFA1D2A756F00123466 /* MapKit.framework */; };
+		A4B87F0E1D2A75B500123466 /* DJIMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B87F051D2A75B500123466 /* DJIMapViewController.m */; };
+		A4B87F0F1D2A75B500123466 /* DJIFlyZoneCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B87F081D2A75B500123466 /* DJIFlyZoneCircle.m */; };
+		A4B87F101D2A75B500123466 /* DJIFlyZoneCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B87F0A1D2A75B500123466 /* DJIFlyZoneCircleView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A4B87EF31D2A716200123466 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A4B87EF21D2A716200123466 /* DJISDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A446D0DF1D3F7DB400804A32 /* DJIAircraftAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIAircraftAnnotation.h; sourceTree = "<group>"; };
+		A446D0E01D3F7DB400804A32 /* DJIAircraftAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIAircraftAnnotation.m; sourceTree = "<group>"; };
+		A446D0E11D3F7DB400804A32 /* DJIAircraftAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIAircraftAnnotationView.h; sourceTree = "<group>"; };
+		A446D0E21D3F7DB400804A32 /* DJIAircraftAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIAircraftAnnotationView.m; sourceTree = "<group>"; };
+		A4B87EC91D2A6EB600123466 /* DJIGeoSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJIGeoSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4B87ECD1D2A6EB600123466 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A4B87ECF1D2A6EB600123466 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A4B87ED01D2A6EB600123466 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A4B87ED21D2A6EB600123466 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		A4B87ED31D2A6EB600123466 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		A4B87ED61D2A6EB600123466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A4B87ED81D2A6EB600123466 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A4B87EDB1D2A6EB600123466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A4B87EDD1D2A6EB600123466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A4B87EEF1D2A715900123466 /* DJISDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DJISDK.framework; sourceTree = "<group>"; };
+		A4B87EF41D2A71B200123466 /* DemoUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoUtility.h; sourceTree = "<group>"; };
+		A4B87EF51D2A71B200123466 /* DemoUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoUtility.m; sourceTree = "<group>"; };
+		A4B87EF71D2A754000123466 /* DJIGeoDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIGeoDemoViewController.h; sourceTree = "<group>"; };
+		A4B87EF81D2A754000123466 /* DJIGeoDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIGeoDemoViewController.m; sourceTree = "<group>"; };
+		A4B87EFA1D2A756F00123466 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A4B87F041D2A75B500123466 /* DJIMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIMapViewController.h; sourceTree = "<group>"; };
+		A4B87F051D2A75B500123466 /* DJIMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIMapViewController.m; sourceTree = "<group>"; };
+		A4B87F071D2A75B500123466 /* DJIFlyZoneCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIFlyZoneCircle.h; sourceTree = "<group>"; };
+		A4B87F081D2A75B500123466 /* DJIFlyZoneCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIFlyZoneCircle.m; sourceTree = "<group>"; };
+		A4B87F091D2A75B500123466 /* DJIFlyZoneCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIFlyZoneCircleView.h; sourceTree = "<group>"; };
+		A4B87F0A1D2A75B500123466 /* DJIFlyZoneCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIFlyZoneCircleView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A4B87EC61D2A6EB600123466 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A4B87EFB1D2A756F00123466 /* MapKit.framework in Frameworks */,
+				A4B87EF11D2A716200123466 /* DJISDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A4B87EC01D2A6EB600123466 = {
+			isa = PBXGroup;
+			children = (
+				A4B87ECB1D2A6EB600123466 /* DJIGeoSample */,
+				A4B87ECA1D2A6EB600123466 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A4B87ECA1D2A6EB600123466 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A4B87EC91D2A6EB600123466 /* DJIGeoSample.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A4B87ECB1D2A6EB600123466 /* DJIGeoSample */ = {
+			isa = PBXGroup;
+			children = (
+				A4B87EF41D2A71B200123466 /* DemoUtility.h */,
+				A4B87EF51D2A71B200123466 /* DemoUtility.m */,
+				A4B87ECF1D2A6EB600123466 /* AppDelegate.h */,
+				A4B87ED01D2A6EB600123466 /* AppDelegate.m */,
+				A4B87ED21D2A6EB600123466 /* RootViewController.h */,
+				A4B87ED31D2A6EB600123466 /* RootViewController.m */,
+				A4B87EF71D2A754000123466 /* DJIGeoDemoViewController.h */,
+				A4B87EF81D2A754000123466 /* DJIGeoDemoViewController.m */,
+				A4B87ED51D2A6EB600123466 /* Main.storyboard */,
+				A4B87EFC1D2A75B500123466 /* DJIMapView */,
+				A4B87ED81D2A6EB600123466 /* Assets.xcassets */,
+				A4B87EDA1D2A6EB600123466 /* LaunchScreen.storyboard */,
+				A4B87EDD1D2A6EB600123466 /* Info.plist */,
+				A4B87EEE1D2A715900123466 /* Frameworks */,
+				A4B87ECC1D2A6EB600123466 /* Supporting Files */,
+			);
+			path = DJIGeoSample;
+			sourceTree = "<group>";
+		};
+		A4B87ECC1D2A6EB600123466 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A4B87ECD1D2A6EB600123466 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A4B87EEE1D2A715900123466 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A4B87EFA1D2A756F00123466 /* MapKit.framework */,
+				A4B87EEF1D2A715900123466 /* DJISDK.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		A4B87EFC1D2A75B500123466 /* DJIMapView */ = {
+			isa = PBXGroup;
+			children = (
+				A4B87EFD1D2A75B500123466 /* DJIAnnotationViews */,
+				A4B87F061D2A75B500123466 /* DJIOverlayViews */,
+				A4B87F041D2A75B500123466 /* DJIMapViewController.h */,
+				A4B87F051D2A75B500123466 /* DJIMapViewController.m */,
+			);
+			path = DJIMapView;
+			sourceTree = "<group>";
+		};
+		A4B87EFD1D2A75B500123466 /* DJIAnnotationViews */ = {
+			isa = PBXGroup;
+			children = (
+				A446D0DF1D3F7DB400804A32 /* DJIAircraftAnnotation.h */,
+				A446D0E01D3F7DB400804A32 /* DJIAircraftAnnotation.m */,
+				A446D0E11D3F7DB400804A32 /* DJIAircraftAnnotationView.h */,
+				A446D0E21D3F7DB400804A32 /* DJIAircraftAnnotationView.m */,
+			);
+			path = DJIAnnotationViews;
+			sourceTree = "<group>";
+		};
+		A4B87F061D2A75B500123466 /* DJIOverlayViews */ = {
+			isa = PBXGroup;
+			children = (
+				A4B87F071D2A75B500123466 /* DJIFlyZoneCircle.h */,
+				A4B87F081D2A75B500123466 /* DJIFlyZoneCircle.m */,
+				A4B87F091D2A75B500123466 /* DJIFlyZoneCircleView.h */,
+				A4B87F0A1D2A75B500123466 /* DJIFlyZoneCircleView.m */,
+			);
+			path = DJIOverlayViews;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A4B87EC81D2A6EB600123466 /* DJIGeoSample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A4B87EE01D2A6EB600123466 /* Build configuration list for PBXNativeTarget "DJIGeoSample" */;
+			buildPhases = (
+				A4B87EC51D2A6EB600123466 /* Sources */,
+				A4B87EC61D2A6EB600123466 /* Frameworks */,
+				A4B87EC71D2A6EB600123466 /* Resources */,
+				A4B87EF31D2A716200123466 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DJIGeoSample;
+			productName = DJIGeoSample;
+			productReference = A4B87EC91D2A6EB600123466 /* DJIGeoSample.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A4B87EC11D2A6EB600123466 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = DJI;
+				TargetAttributes = {
+					A4B87EC81D2A6EB600123466 = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 7UL3LRJL93;
+					};
+				};
+			};
+			buildConfigurationList = A4B87EC41D2A6EB600123466 /* Build configuration list for PBXProject "DJIGeoSample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A4B87EC01D2A6EB600123466;
+			productRefGroup = A4B87ECA1D2A6EB600123466 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A4B87EC81D2A6EB600123466 /* DJIGeoSample */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A4B87EC71D2A6EB600123466 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A4B87EDC1D2A6EB600123466 /* LaunchScreen.storyboard in Resources */,
+				A4B87ED91D2A6EB600123466 /* Assets.xcassets in Resources */,
+				A4B87ED71D2A6EB600123466 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A4B87EC51D2A6EB600123466 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A4B87ED41D2A6EB600123466 /* RootViewController.m in Sources */,
+				A4B87F101D2A75B500123466 /* DJIFlyZoneCircleView.m in Sources */,
+				A4B87EF61D2A71B200123466 /* DemoUtility.m in Sources */,
+				A446D0E41D3F7DB400804A32 /* DJIAircraftAnnotationView.m in Sources */,
+				A4B87F0E1D2A75B500123466 /* DJIMapViewController.m in Sources */,
+				A446D0E31D3F7DB400804A32 /* DJIAircraftAnnotation.m in Sources */,
+				A4B87ED11D2A6EB600123466 /* AppDelegate.m in Sources */,
+				A4B87F0F1D2A75B500123466 /* DJIFlyZoneCircle.m in Sources */,
+				A4B87ECE1D2A6EB600123466 /* main.m in Sources */,
+				A4B87EF91D2A754000123466 /* DJIGeoDemoViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A4B87ED51D2A6EB600123466 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A4B87ED61D2A6EB600123466 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A4B87EDA1D2A6EB600123466 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A4B87EDB1D2A6EB600123466 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A4B87EDE1D2A6EB600123466 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A4B87EDF1D2A6EB600123466 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A4B87EE11D2A6EB600123466 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/DJIGeoSample/Frameworks",
+				);
+				INFOPLIST_FILE = DJIGeoSample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dji.DJIGeoSample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A4B87EE21D2A6EB600123466 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/DJIGeoSample/Frameworks",
+				);
+				INFOPLIST_FILE = DJIGeoSample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dji.DJIGeoSample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A4B87EC41D2A6EB600123466 /* Build configuration list for PBXProject "DJIGeoSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A4B87EDE1D2A6EB600123466 /* Debug */,
+				A4B87EDF1D2A6EB600123466 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A4B87EE01D2A6EB600123466 /* Build configuration list for PBXNativeTarget "DJIGeoSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A4B87EE11D2A6EB600123466 /* Debug */,
+				A4B87EE21D2A6EB600123466 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A4B87EC11D2A6EB600123466 /* Project object */;
+}
