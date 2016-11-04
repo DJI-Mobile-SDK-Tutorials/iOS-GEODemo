@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		166D6BA2D6E9D4FC33F80FDD /* libPods-DJIGeoSample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F55FA2AEF9EEEB631917769 /* libPods-DJIGeoSample.a */; };
 		A446D0E31D3F7DB400804A32 /* DJIAircraftAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A446D0E01D3F7DB400804A32 /* DJIAircraftAnnotation.m */; };
 		A446D0E41D3F7DB400804A32 /* DJIAircraftAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = A446D0E21D3F7DB400804A32 /* DJIAircraftAnnotationView.m */; };
 		A4B87ECE1D2A6EB600123466 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B87ECD1D2A6EB600123466 /* main.m */; };
@@ -15,8 +16,6 @@
 		A4B87ED71D2A6EB600123466 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4B87ED51D2A6EB600123466 /* Main.storyboard */; };
 		A4B87ED91D2A6EB600123466 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4B87ED81D2A6EB600123466 /* Assets.xcassets */; };
 		A4B87EDC1D2A6EB600123466 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4B87EDA1D2A6EB600123466 /* LaunchScreen.storyboard */; };
-		A4B87EF11D2A716200123466 /* DJISDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B87EEF1D2A715900123466 /* DJISDK.framework */; };
-		A4B87EF21D2A716200123466 /* DJISDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A4B87EEF1D2A715900123466 /* DJISDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A4B87EF61D2A71B200123466 /* DemoUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B87EF51D2A71B200123466 /* DemoUtility.m */; };
 		A4B87EF91D2A754000123466 /* DJIGeoDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B87EF81D2A754000123466 /* DJIGeoDemoViewController.m */; };
 		A4B87EFB1D2A756F00123466 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B87EFA1D2A756F00123466 /* MapKit.framework */; };
@@ -32,7 +31,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A4B87EF21D2A716200123466 /* DJISDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -40,6 +38,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1E337176DA7FBD1E2C722E3D /* Pods-DJIGeoSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJIGeoSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJIGeoSample/Pods-DJIGeoSample.debug.xcconfig"; sourceTree = "<group>"; };
+		775EE19841AAF3FB2E90EA53 /* Pods-DJIGeoSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJIGeoSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJIGeoSample/Pods-DJIGeoSample.release.xcconfig"; sourceTree = "<group>"; };
+		7F55FA2AEF9EEEB631917769 /* libPods-DJIGeoSample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DJIGeoSample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A41255AA1DCB172C002DF91B /* DJIGeoSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DJIGeoSample.entitlements; sourceTree = "<group>"; };
 		A446D0DF1D3F7DB400804A32 /* DJIAircraftAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIAircraftAnnotation.h; sourceTree = "<group>"; };
 		A446D0E01D3F7DB400804A32 /* DJIAircraftAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIAircraftAnnotation.m; sourceTree = "<group>"; };
 		A446D0E11D3F7DB400804A32 /* DJIAircraftAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIAircraftAnnotationView.h; sourceTree = "<group>"; };
@@ -74,18 +76,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4B87EFB1D2A756F00123466 /* MapKit.framework in Frameworks */,
-				A4B87EF11D2A716200123466 /* DJISDK.framework in Frameworks */,
+				166D6BA2D6E9D4FC33F80FDD /* libPods-DJIGeoSample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1669053BDA26243914C4A3EE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7F55FA2AEF9EEEB631917769 /* libPods-DJIGeoSample.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4DB953FD1E9D85FD3E240EA3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1E337176DA7FBD1E2C722E3D /* Pods-DJIGeoSample.debug.xcconfig */,
+				775EE19841AAF3FB2E90EA53 /* Pods-DJIGeoSample.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A4B87EC01D2A6EB600123466 = {
 			isa = PBXGroup;
 			children = (
 				A4B87ECB1D2A6EB600123466 /* DJIGeoSample */,
 				A4B87ECA1D2A6EB600123466 /* Products */,
+				4DB953FD1E9D85FD3E240EA3 /* Pods */,
+				1669053BDA26243914C4A3EE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,6 +121,7 @@
 		A4B87ECB1D2A6EB600123466 /* DJIGeoSample */ = {
 			isa = PBXGroup;
 			children = (
+				A41255AA1DCB172C002DF91B /* DJIGeoSample.entitlements */,
 				A4B87EF41D2A71B200123466 /* DemoUtility.h */,
 				A4B87EF51D2A71B200123466 /* DemoUtility.m */,
 				A4B87ECF1D2A6EB600123466 /* AppDelegate.h */,
@@ -176,10 +198,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A4B87EE01D2A6EB600123466 /* Build configuration list for PBXNativeTarget "DJIGeoSample" */;
 			buildPhases = (
+				21843A1ACD6B5A48C5B3A8F1 /* [CP] Check Pods Manifest.lock */,
 				A4B87EC51D2A6EB600123466 /* Sources */,
 				A4B87EC61D2A6EB600123466 /* Frameworks */,
 				A4B87EC71D2A6EB600123466 /* Resources */,
 				A4B87EF31D2A716200123466 /* Embed Frameworks */,
+				B875BB0DF8588133AAFA9AE1 /* [CP] Embed Pods Frameworks */,
+				340E20457DB2513A6381C64C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -201,7 +226,11 @@
 				TargetAttributes = {
 					A4B87EC81D2A6EB600123466 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 7UL3LRJL93;
+						SystemCapabilities = {
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -235,6 +264,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		21843A1ACD6B5A48C5B3A8F1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		340E20457DB2513A6381C64C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DJIGeoSample/Pods-DJIGeoSample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B875BB0DF8588133AAFA9AE1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DJIGeoSample/Pods-DJIGeoSample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A4B87EC51D2A6EB600123466 /* Sources */ = {
@@ -360,17 +437,18 @@
 		};
 		A4B87EE11D2A6EB600123466 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1E337176DA7FBD1E2C722E3D /* Pods-DJIGeoSample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DJIGeoSample/DJIGeoSample.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/DJIGeoSample/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = DJIGeoSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dji.DJIGeoSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -378,17 +456,18 @@
 		};
 		A4B87EE21D2A6EB600123466 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 775EE19841AAF3FB2E90EA53 /* Pods-DJIGeoSample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DJIGeoSample/DJIGeoSample.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/DJIGeoSample/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = DJIGeoSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dji.DJIGeoSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
