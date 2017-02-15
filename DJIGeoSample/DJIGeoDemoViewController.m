@@ -55,14 +55,16 @@
     
     DJIAircraft* aircraft = [DemoUtility fetchAircraft];
     if (aircraft != nil) {
-        [aircraft.flightController.simulator setFlyZoneEnabled:YES withCompletion:^(NSError * _Nullable error) {
+        
+        [aircraft.flightController.simulator setFlyZoneLimitationEnabled:YES withCompletion:^(NSError * _Nullable error) {
             if (error) {
-                NSLog(@"setFlyZoneEnabled failed");
+                NSLog(@"setFlyZoneLimitationEnabled failed");
             }else
             {
-                NSLog(@"setFlyZoneEnabled success");
+                NSLog(@"setFlyZoneLimitationEnabled success");
             }
         }];
+
     }
     
     WeakRef(target);
@@ -89,12 +91,13 @@
     [super viewWillDisappear:animated];
     
     DJIAircraft* aircraft = [DemoUtility fetchAircraft];
-    [aircraft.flightController.simulator setFlyZoneEnabled:NO withCompletion:^(NSError * _Nullable error) {
+    
+    [aircraft.flightController.simulator setFlyZoneLimitationEnabled:NO withCompletion:^(NSError * _Nullable error) {
         if (error) {
-            NSLog(@"setFlyZone disabled failed");
+            NSLog(@"setFlyZoneLimitationEnabled failed");
         }else
         {
-            NSLog(@"setFlyZone disabled success");
+            NSLog(@"setFlyZoneLimitationEnabled success");
         }
     }];
 
@@ -128,7 +131,7 @@
 
 - (IBAction)onLoginButtonClicked:(id)sender
 {
-    [[DJIFlyZoneManager sharedInstance] logIntoDJIUserAccountWithCompletion:^(NSError * _Nullable error) {
+    [[DJIFlyZoneManager sharedInstance] logIntoDJIUserAccountWithCompletion:^(DJIUserAccountStatus status, NSError * _Nullable error) {
         if (error) {
             ShowResult([NSString stringWithFormat:@"GEO Login Error: %@", error.description]);
             
@@ -156,18 +159,19 @@
 
 - (IBAction)onGetUnlockButtonClicked:(id)sender
 {
-    [[DJIFlyZoneManager sharedInstance] getUnlockedFlyZonesWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
+    [[DJIFlyZoneManager sharedInstance] getUnlockedFlyZonesWithCompletion:^(NSArray<DJIGEOFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
         if (error) {
             ShowResult(@"Get Unlock Error:%@", error.description);
         } else {
             NSString* unlockInfo = [NSString stringWithFormat:@"unlock zone count = %lu\n", infos.count];
             
-            for (DJIFlyZoneInformation* info in infos) {
+            for (DJIGEOFlyZoneInformation* info in infos) {
                 unlockInfo = [unlockInfo stringByAppendingString:[NSString stringWithFormat:@"ID:%lu Name:%@ Begin:%@ end:%@\n", (unsigned long)info.flyZoneID, info.name, info.unlockStartTime, info.unlockEndTime]];
             };
             ShowResult(@"%@", unlockInfo);
         }
     }];
+    
 }
 
 - (IBAction)onEnableGEOButtonClicked:(id)sender
@@ -222,7 +226,8 @@
         if (latitude && longitude) {
             CLLocationCoordinate2D location = CLLocationCoordinate2DMake(latitude, longitude);
             WeakRef(target);
-            [flightController.simulator startSimulatorWithLocation:location updateFrequency:20 GPSSatellitesNumber:10 withCompletion:^(NSError * _Nullable error) {
+            
+            [flightController.simulator startWithLocation:location updateFrequency:20 GPSSatellitesNumber:10 withCompletion:^(NSError * _Nullable error) {
                 WeakReturn(target);
                 if (error) {
                     ShowResult(@"Start simulator error:%@", error.description);
@@ -231,6 +236,7 @@
                     [self.djiMapViewController refreshMapViewRegion];
                 }
             }];
+            
         }
 
     }];
@@ -249,7 +255,7 @@
         return;
     }
     
-    [flightController.simulator stopSimulatorWithCompletion:^(NSError * _Nullable error) {
+    [flightController.simulator stopWithCompletion:^(NSError * _Nullable error) {
         if (error) {
             ShowResult(@"Stop simulator error:%@", error.description);
         }else
@@ -296,13 +302,13 @@
                 ShowResult(@"unlock fly zones failed%@", error.description);
             } else {
                                 
-                [[DJIFlyZoneManager sharedInstance] getUnlockedFlyZonesWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
+                [[DJIFlyZoneManager sharedInstance] getUnlockedFlyZonesWithCompletion:^(NSArray<DJIGEOFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
                     if (error) {
                         ShowResult(@"get unlocked fly zone failed:%@", error.description);
                     } else {
                         NSString* resultMessage = [NSString stringWithFormat:@"unlock zone: %tu ", [infos count]];
                         for (int i = 0; i < infos.count; ++i) {
-                            DJIFlyZoneInformation* info = [infos objectAtIndex:i];
+                            DJIGEOFlyZoneInformation* info = [infos objectAtIndex:i];
                             resultMessage = [resultMessage stringByAppendingString:[NSString stringWithFormat:@"\n ID:%lu Name:%@ Begin:%@ End:%@\n", (unsigned long)info.flyZoneID, info.name, info.unlockStartTime, info.unlockEndTime]];
                         }
                         ShowResult(resultMessage);
@@ -352,21 +358,20 @@
 
 #pragma mark - DJIFlyZoneDelegate Method
 
--(void)flyZoneManager:(DJIFlyZoneManager *)manager didUpdateFlyZoneStatus:(DJIFlyZoneStatus)status
+- (void)flyZoneManager:(DJIFlyZoneManager *)manager didUpdateFlyZoneStatus:(DJIFlyZoneState)status
 {
     NSString* flyZoneStatusString = @"Unknown";
-    
     switch (status) {
-        case DJIFlyZoneStatusClear:
+        case DJIFlyZoneStateClear:
             flyZoneStatusString = @"NoRestriction";
             break;
-        case DJIFlyZoneStatusInWarningZone:
+        case DJIFlyZoneStateInWarningZone:
             flyZoneStatusString = @"AlreadyInWarningArea";
             break;
-        case DJIFlyZoneStatusNearRestrictedZone:
+        case DJIFlyZoneStateNearRestrictedZone:
             flyZoneStatusString = @"ApproachingRestrictedArea";
             break;
-        case DJIFlyZoneStatusInRestrictedZone:
+        case DJIFlyZoneStateInRestrictedZone:
             flyZoneStatusString = @"AlreadyInRestrictedArea";
             break;
         default:
@@ -378,7 +383,7 @@
 
 #pragma mark - DJIFlightControllerDelegate Method
 
--(void) flightController:(DJIFlightController*)fc didUpdateSystemState:(DJIFlightControllerCurrentState*)state
+- (void)flightController:(DJIFlightController *)fc didUpdateState:(DJIFlightControllerState *)state
 {
     if (CLLocationCoordinate2DIsValid(state.aircraftLocation)) {
         double heading = RADIAN(state.attitude.yaw);

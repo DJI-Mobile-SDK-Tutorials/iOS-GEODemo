@@ -113,14 +113,14 @@
 
 -(void) updateFlyZonesInSurroundingArea
 {
-    [[DJIFlyZoneManager sharedInstance] getFlyZonesInSurroundingAreaWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
+    [[DJIFlyZoneManager sharedInstance] getFlyZonesInSurroundingAreaWithCompletion:^(NSArray<DJIGEOFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
         if (nil == error && nil != infos) {
             [self updateFlyZoneOverlayWithInfos:infos];
         }
     }];
 }
 
-- (void)updateFlyZoneOverlayWithInfos:(NSArray<DJIFlyZoneInformation*> *_Nullable)flyZoneInfos
+- (void)updateFlyZoneOverlayWithInfos:(NSArray<DJIGEOFlyZoneInformation*> *_Nullable)flyZoneInfos
 {
     NSMutableArray *removeFlyZones = [NSMutableArray array];
     BOOL *flyZoneExistFlag = (BOOL *)malloc(sizeof(BOOL) * flyZoneInfos.count);
@@ -129,7 +129,7 @@
     for (DJIFlyZoneCircle *flyZoneCircle in self.flyZones) {
         BOOL exist = NO;
         for (int i = 0; i < flyZoneInfos.count; i++) {
-            DJIFlyZoneInformation* flyZoneInfo = [flyZoneInfos objectAtIndex:i];
+            DJIGEOFlyZoneInformation* flyZoneInfo = [flyZoneInfos objectAtIndex:i];
             CLLocationCoordinate2D flyZoneCoordinate = flyZoneInfo.coordinate;
             
             if (fabs(flyZoneCircle.flyZoneCoordinate.latitude - flyZoneCoordinate.latitude) < 0.0001 && fabs(flyZoneCircle.flyZoneCoordinate.longitude - flyZoneCoordinate.longitude) < 0.0001 && flyZoneInfo.category == flyZoneCircle.category) {
@@ -159,7 +159,7 @@
         dispatch_block_t block = ^{
             for (int i = 0; i < flyZoneInfos.count; i++) {
                 if (!flyZoneExistFlag[i]) {
-                    DJIFlyZoneInformation *flyZoneInfo = [flyZoneInfos objectAtIndex:i];
+                    DJIGEOFlyZoneInformation *flyZoneInfo = [flyZoneInfos objectAtIndex:i];
                     CLLocationCoordinate2D flyZoneCoordinate = flyZoneInfo.coordinate;
                     CGFloat radius = flyZoneInfo.radius;
                     
