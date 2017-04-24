@@ -13,13 +13,21 @@
 #import "DJIFlyZoneCircle.h"
 #import "DJIFlyZoneCircleView.h"
 #import "DemoUtility.h"
+#import "DJILimitSpaceOverlay.h"
+#import "DJIMapPolygon.h"
+#import "DJIFlyLimitPolygonView.h"
+#import "DJICircle.h"
+
+#define UPDATETIMESTAMP (10)
+
 
 @interface DJIMapViewController () <MKMapViewDelegate>
 
 @property (nonatomic) CLLocationCoordinate2D aircraftCoordinate;
 @property (weak, nonatomic) MKMapView *mapView;
 @property (nonatomic, strong) DJIAircraftAnnotation* aircraftAnnotation;
-@property (nonatomic, strong) NSMutableArray *flyZones;
+@property (nonatomic, strong) NSMutableArray<DJIMapOverlay *> *mapOverlays;
+@property (nonatomic, assign) NSTimeInterval lastUpdateTime;
 
 @end
 
@@ -32,6 +40,8 @@
             self.mapView = mapView;
             self.mapView.delegate = self;
             self.flyZones = [NSMutableArray array];
+            self.mapOverlays = [NSMutableArray array];
+            [self forceUpdateFlyZones];
         }
         return self;
     }
@@ -63,14 +73,14 @@
             MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(coordinate, 500, 500);
             MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:viewRegion];
             [self.mapView setRegion:adjustedRegion animated:YES];
-            [self updateFlyZonesInSurroundingArea];
+            [self updateFlyZones];
         }
         else
         {
             [self.aircraftAnnotation setCoordinate:coordinate];
             DJIAircraftAnnotationView *annotationView = (DJIAircraftAnnotationView *)[_mapView viewForAnnotation:self.aircraftAnnotation];
             [annotationView updateHeading:heading];
-            [self updateFlyZonesInSurroundingArea];
+            [self updateFlyZones];
         }
         
     }
@@ -104,80 +114,104 @@
        
        DJIFlyZoneCircleView* circleView = [[DJIFlyZoneCircleView alloc] initWithCircle:overlay];
        return circleView;
-    }
+   }else if([overlay isKindOfClass:[DJIPolygon class]]){
+       DJIFlyLimitPolygonView *polygonRender = [[DJIFlyLimitPolygonView alloc] initWithPolygon:(DJIPolygon *)overlay];
+       return polygonRender;
+   }else if ([overlay isKindOfClass:[DJIMapPolygon class]]) {
+       MKPolygonRenderer *polygonRender = [[MKPolygonRenderer alloc] initWithPolygon:(MKPolygon *)overlay];
+       DJIMapPolygon *polygon = (DJIMapPolygon *)overlay;
+       polygonRender.strokeColor = polygon.strokeColor;
+       polygonRender.lineWidth = polygon.lineWidth;
+       polygonRender.lineDashPattern = polygon.lineDashPattern;
+       polygonRender.lineJoin = polygon.lineJoin;
+       polygonRender.lineCap = polygon.lineCap;
+       polygonRender.fillColor = polygon.fillColor;
+       return polygonRender;
+   } else if ([overlay isKindOfClass:[DJICircle class]]) {
+       DJICircle *circle = (DJICircle *)overlay;
+       MKCircleRenderer *circleRender = [[MKCircleRenderer alloc] initWithCircle:circle];
+       circleRender.strokeColor = circle.strokeColor;
+       circleRender.lineWidth = circle.lineWidth;
+       circleRender.fillColor = circle.fillColor;
+       return circleRender;
+   }
 
     return nil;
 }
 
 #pragma mark - Update Fly Zones in Surrounding Area
 
+-(void) updateFlyZones
+{
+    if ([self canUpdateLimitFlyZoneWithCoordinate]) {
+        [self updateFlyZonesInSurroundingArea];
+    }
+}
+
+- (void)forceUpdateFlyZones
+{
+    [self updateFlyZonesInSurroundingArea];
+}
+
+-(BOOL) canUpdateLimitFlyZoneWithCoordinate
+{
+    NSTimeInterval currentTime = [NSDate timeIntervalSinceReferenceDate];
+    
+    if ((currentTime - self.lastUpdateTime) < UPDATETIMESTAMP) {
+        return NO;
+    }
+    
+    self.lastUpdateTime = [NSDate timeIntervalSinceReferenceDate];
+    return YES;
+}
+
 -(void) updateFlyZonesInSurroundingArea
 {
-    [[DJIFlyZoneManager sharedInstance] getFlyZonesInSurroundingAreaWithCompletion:^(NSArray<DJIGEOFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
+    WeakRef(target);
+    [[DJISDKManager flyZoneManager] getFlyZonesInSurroundingAreaWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
+        WeakReturn(target);
         if (nil == error && nil != infos) {
-            [self updateFlyZoneOverlayWithInfos:infos];
+            [target updateFlyZoneOverlayWithInfos:infos];
+        }else{
+            NSLog(@"Get fly zone failed: %@", error.description);
+            if (target.mapOverlays.count > 0) {
+                [target removeMapOverlays:target.mapOverlays];
+            }
+            if (target.flyZones.count > 0) {
+                [target.flyZones removeAllObjects];
+            }
         }
     }];
 }
 
-- (void)updateFlyZoneOverlayWithInfos:(NSArray<DJIGEOFlyZoneInformation*> *_Nullable)flyZoneInfos
+- (void)updateFlyZoneOverlayWithInfos:(NSArray<DJIFlyZoneInformation*> *_Nullable)flyZoneInfos
 {
-    NSMutableArray *removeFlyZones = [NSMutableArray array];
-    BOOL *flyZoneExistFlag = (BOOL *)malloc(sizeof(BOOL) * flyZoneInfos.count);
-    bzero(flyZoneExistFlag, sizeof(BOOL) * flyZoneInfos.count);
-    
-    for (DJIFlyZoneCircle *flyZoneCircle in self.flyZones) {
-        BOOL exist = NO;
-        for (int i = 0; i < flyZoneInfos.count; i++) {
-            DJIGEOFlyZoneInformation* flyZoneInfo = [flyZoneInfos objectAtIndex:i];
-            CLLocationCoordinate2D flyZoneCoordinate = flyZoneInfo.coordinate;
-            
-            if (fabs(flyZoneCircle.flyZoneCoordinate.latitude - flyZoneCoordinate.latitude) < 0.0001 && fabs(flyZoneCircle.flyZoneCoordinate.longitude - flyZoneCoordinate.longitude) < 0.0001 && flyZoneInfo.category == flyZoneCircle.category) {
-                exist = YES;
-                flyZoneExistFlag[i] = YES;
-                break;
-            }
-        }
-        
-        if (!exist) {
-            [removeFlyZones addObject:flyZoneCircle];
-            if ([NSThread currentThread].isMainThread) {
-                [self.mapView removeOverlay:flyZoneCircle];
-            } else {
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    [self.mapView removeOverlay:flyZoneCircle];
-                });
-            }
-        }
-    }
-    
-    [self.flyZones removeObjectsInArray:removeFlyZones];
-    
     if (flyZoneInfos && flyZoneInfos.count > 0) {
-        
-        WeakRef(target);
         dispatch_block_t block = ^{
-            for (int i = 0; i < flyZoneInfos.count; i++) {
-                if (!flyZoneExistFlag[i]) {
-                    DJIGEOFlyZoneInformation *flyZoneInfo = [flyZoneInfos objectAtIndex:i];
-                    CLLocationCoordinate2D flyZoneCoordinate = flyZoneInfo.coordinate;
-                    CGFloat radius = flyZoneInfo.radius;
-                    
-                    CLLocationCoordinate2D coordinateInMap = flyZoneCoordinate;
-                    DJIFlyZoneCircle *circle = [DJIFlyZoneCircle circleWithCenterCoordinate:coordinateInMap radius:radius];
-                    circle.flyZoneRadius = radius;
-                    circle.flyZoneCoordinate = flyZoneCoordinate;
-                    circle.category = flyZoneInfo.category;
-                    circle.flyZoneID = flyZoneInfo.flyZoneID;
-                    circle.name = flyZoneInfo.name;
-                    [target.flyZones addObject:circle];
-                    [target.mapView addOverlay:circle];
-                }
-            }
+            NSMutableArray *overlays = [NSMutableArray array];
+            NSMutableArray *flyZones = [NSMutableArray array];
             
-            free(flyZoneExistFlag);
+            for (int i = 0; i < flyZoneInfos.count; i++) {
+                DJIFlyZoneInformation *flyZoneLimitInfo = [flyZoneInfos objectAtIndex:i];
+                DJILimitSpaceOverlay *aOverlay = nil;
+                for (DJILimitSpaceOverlay *aMapOverlay in _mapOverlays) {
+                    if (aMapOverlay.limitSpaceInfo.flyZoneID == flyZoneLimitInfo.flyZoneID &&
+                        (aMapOverlay.limitSpaceInfo.subFlyZones.count == flyZoneLimitInfo.subFlyZones.count)) {
+                        aOverlay = aMapOverlay;
+                        break;
+                    }
+                }
+                if (!aOverlay) {
+                    aOverlay = [[DJILimitSpaceOverlay alloc] initWithLimitSpace:flyZoneLimitInfo];
+                }
+                [overlays addObject:aOverlay];
+                [flyZones addObject:flyZoneLimitInfo];
+            }
+            [self removeMapOverlays:self.mapOverlays];
+            [self.flyZones removeAllObjects];
+            [self addMapOverlays:overlays];
+            [self.flyZones addObjectsFromArray:flyZones];
         };
-        
         if ([NSThread currentThread].isMainThread) {
             block();
         } else {
@@ -185,8 +219,57 @@
                 block();
             });
         }
+    }
+}
+
+
+- (void)setMapType:(MKMapType)mapType
+{
+    self.mapView.mapType = mapType;
+}
+
+- (void)addMapOverlays:(NSArray *)objects
+{
+    if (objects.count <= 0) {
+        return;
+    }
+    NSMutableArray *overlays = [NSMutableArray array];
+    for (DJIMapOverlay *aMapOverlay in objects) {
+        for (id<MKOverlay> aOverlay in aMapOverlay.subOverlays) {
+            [overlays addObject:aOverlay];
+        }
+    }
+    
+    if ([NSThread isMainThread]) {
+        [self.mapOverlays addObjectsFromArray:objects];
+        [self.mapView addOverlays:overlays];
     } else {
-        free(flyZoneExistFlag);
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self.mapOverlays addObjectsFromArray:objects];
+            [self.mapView addOverlays:overlays];
+        });
+    }
+}
+
+- (void)removeMapOverlays:(NSArray *)objects
+{
+    if (objects.count <= 0) {
+        return;
+    }
+    NSMutableArray *overlays = [NSMutableArray array];
+    for (DJIMapOverlay *aMapOverlay in objects) {
+        for (id<MKOverlay> aOverlay in aMapOverlay.subOverlays) {
+            [overlays addObject:aOverlay];
+        }
+    }
+    if ([NSThread isMainThread]) {
+        [self.mapOverlays removeObjectsInArray:objects];
+        [self.mapView removeOverlays:overlays];
+    } else {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self.mapOverlays removeObjectsInArray:objects];
+            [self.mapView removeOverlays:overlays];
+        });
     }
 }
 
@@ -195,21 +278,6 @@
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(_aircraftCoordinate, 500, 500);
     MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:viewRegion];
     [self.mapView setRegion:adjustedRegion animated:YES];
-}
-
-- (NSString *)fetchUpdateFlyZoneInfo
-{
-    NSString* flyZoneDataString = @"";
-    if ([self.flyZones count] > 0) {
-        flyZoneDataString = [NSString stringWithFormat:@"flyZones:%tu\n", [self.flyZones count]];
-        for (int i = 0; i < self.flyZones.count; ++i) {
-            DJIFlyZoneCircle* flyZoneArea = [self.flyZones objectAtIndex:i];
-            NSString* flyZoneInfoString = [NSString stringWithFormat:@"\nID:%lu, level:%d\n Name:%@", (unsigned long)flyZoneArea.flyZoneID, flyZoneArea.category, flyZoneArea.name];
-            flyZoneDataString = [flyZoneDataString stringByAppendingString:flyZoneInfoString];
-        }
-    }
-    
-    return flyZoneDataString;
 }
 
 @end

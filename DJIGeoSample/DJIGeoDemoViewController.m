@@ -10,8 +10,9 @@
 #import "DJIMapViewController.h"
 #import <DJISDK/DJISDK.h>
 #import "DemoUtility.h"
+#import "DJIScrollView.h"
 
-@interface DJIGeoDemoViewController ()<DJIFlyZoneDelegate, DJIFlightControllerDelegate, DJISimulatorDelegate>
+@interface DJIGeoDemoViewController ()<DJIFlyZoneDelegate, DJIFlightControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
@@ -19,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *loginStateLabel;
 @property (weak, nonatomic) IBOutlet UIButton *unlockBtn;
 @property (weak, nonatomic) IBOutlet UILabel *flyZoneStatusLabel;
-@property (weak, nonatomic) IBOutlet UITextView *flyZoneDataTextView;
 @property (weak, nonatomic) IBOutlet UIButton *getUnlockButton;
 @property (weak, nonatomic) IBOutlet UIButton *enableGEOButton;
 
@@ -28,6 +28,8 @@
 @property (nonatomic, strong) NSTimer* updateFlyZoneDataTimer;
 @property (nonatomic, strong) NSMutableArray<NSNumber *> * unlockFlyZoneIDs;
 @property (nonatomic, readwrite) BOOL isGEOSystemEnabled;
+@property (weak, nonatomic) IBOutlet UITableView *showFlyZoneMessageTableView;
+@property(nonatomic, strong) DJIScrollView *flyZoneInfoView;
 
 @end
 
@@ -43,8 +45,7 @@
     if (aircraft == nil) return;
     
     aircraft.flightController.delegate = self;
-    aircraft.flightController.simulator.delegate = self;
-    [[DJIFlyZoneManager sharedInstance] setDelegate:self];
+    [[DJISDKManager flyZoneManager] setDelegate:self];
     
     [self initUI];
 }
@@ -69,7 +70,7 @@
     
     WeakRef(target);
     
-    [[DJIFlyZoneManager sharedInstance] getGEOSystemEnabled:^(BOOL enabled, NSError * _Nullable error) {
+    [[DJISDKManager flyZoneManager] getGEOSystemEnabled:^(BOOL enabled, NSError * _Nullable error) {
         
         WeakReturn(target);
         if (error) {
@@ -114,6 +115,9 @@
     self.djiMapViewController = [[DJIMapViewController alloc] initWithMap:self.mapView];
     self.unlockFlyZoneIDs = [[NSMutableArray alloc] init];
     self.isGEOSystemEnabled = NO;
+    self.flyZoneInfoView = [DJIScrollView viewWithViewController:self];
+    self.flyZoneInfoView.hidden = YES;
+    [self.flyZoneInfoView setDefaultSize];
 }
 
 - (void) setEnableGEOButtonText:(BOOL)enabled
@@ -131,7 +135,7 @@
 
 - (IBAction)onLoginButtonClicked:(id)sender
 {
-    [[DJIFlyZoneManager sharedInstance] logIntoDJIUserAccountWithCompletion:^(DJIUserAccountStatus status, NSError * _Nullable error) {
+    [[DJISDKManager flyZoneManager] logIntoDJIUserAccountWithCompletion:^(DJIUserAccountState status, NSError * _Nullable error) {
         if (error) {
             ShowResult([NSString stringWithFormat:@"GEO Login Error: %@", error.description]);
             
@@ -143,7 +147,7 @@
 
 - (IBAction)onLogoutButtonClicked:(id)sender {
     
-    [[DJIFlyZoneManager sharedInstance] logOutOfDJIUserAccountWithCompletion:^(NSError * _Nullable error) {
+    [[DJISDKManager flyZoneManager] logOutOfDJIUserAccountWithCompletion:^(NSError * _Nullable error) {
         if (error) {
             ShowResult(@"Login out error:%@", error.description);
         } else {
@@ -159,13 +163,13 @@
 
 - (IBAction)onGetUnlockButtonClicked:(id)sender
 {
-    [[DJIFlyZoneManager sharedInstance] getUnlockedFlyZonesWithCompletion:^(NSArray<DJIGEOFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
+    [[DJISDKManager flyZoneManager] getUnlockedFlyZonesWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
         if (error) {
             ShowResult(@"Get Unlock Error:%@", error.description);
         } else {
             NSString* unlockInfo = [NSString stringWithFormat:@"unlock zone count = %lu\n", infos.count];
             
-            for (DJIGEOFlyZoneInformation* info in infos) {
+            for (DJIFlyZoneInformation* info in infos) {
                 unlockInfo = [unlockInfo stringByAppendingString:[NSString stringWithFormat:@"ID:%lu Name:%@ Begin:%@ end:%@\n", (unsigned long)info.flyZoneID, info.name, info.unlockStartTime, info.unlockEndTime]];
             };
             ShowResult(@"%@", unlockInfo);
@@ -177,14 +181,14 @@
 - (IBAction)onEnableGEOButtonClicked:(id)sender
 {
     WeakRef(target);
-    [[DJIFlyZoneManager sharedInstance] setGEOSystemEnabled:!self.isGEOSystemEnabled withCompletion:^(NSError * _Nullable error) {
+    [[DJISDKManager flyZoneManager] setGEOSystemEnabled:!self.isGEOSystemEnabled withCompletion:^(NSError * _Nullable error) {
         WeakReturn(target);
 
         if (error) {
             ShowResult(@"Set GEO Enable status error:%@", error.description);
         } else {
             
-            [[DJIFlyZoneManager sharedInstance] getGEOSystemEnabled:^(BOOL enabled, NSError * _Nullable error) {
+            [[DJISDKManager flyZoneManager] getGEOSystemEnabled:^(BOOL enabled, NSError * _Nullable error) {
                 if (error) {
                     ShowResult(@"Get GEOEnable Status Error:%@", error.description);
                 } else {
@@ -233,7 +237,7 @@
                     ShowResult(@"Start simulator error:%@", error.description);
                 } else {
                     ShowResult(@"Start simulator success");
-                    [self.djiMapViewController refreshMapViewRegion];
+                    [target.djiMapViewController refreshMapViewRegion];
                 }
             }];
             
@@ -255,12 +259,15 @@
         return;
     }
     
+    WeakRef(target);
     [flightController.simulator stopWithCompletion:^(NSError * _Nullable error) {
+        WeakReturn(target);
         if (error) {
             ShowResult(@"Stop simulator error:%@", error.description);
         }else
         {
             ShowResult(@"Stop simulator success");
+
         }
     }];
 }
@@ -294,7 +301,7 @@
             int flyZoneID = [content intValue];
             [target.unlockFlyZoneIDs addObject:@(flyZoneID)];
         }
-        [[DJIFlyZoneManager sharedInstance] unlockFlyZones:target.unlockFlyZoneIDs withCompletion:^(NSError * _Nullable error) {
+        [[DJISDKManager flyZoneManager] unlockFlyZones:target.unlockFlyZoneIDs withCompletion:^(NSError * _Nullable error) {
             
             [target.unlockFlyZoneIDs removeAllObjects];
 
@@ -302,13 +309,13 @@
                 ShowResult(@"unlock fly zones failed%@", error.description);
             } else {
                                 
-                [[DJIFlyZoneManager sharedInstance] getUnlockedFlyZonesWithCompletion:^(NSArray<DJIGEOFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
+                [[DJISDKManager flyZoneManager] getUnlockedFlyZonesWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
                     if (error) {
                         ShowResult(@"get unlocked fly zone failed:%@", error.description);
                     } else {
                         NSString* resultMessage = [NSString stringWithFormat:@"unlock zone: %tu ", [infos count]];
                         for (int i = 0; i < infos.count; ++i) {
-                            DJIGEOFlyZoneInformation* info = [infos objectAtIndex:i];
+                            DJIFlyZoneInformation* info = [infos objectAtIndex:i];
                             resultMessage = [resultMessage stringByAppendingString:[NSString stringWithFormat:@"\n ID:%lu Name:%@ Begin:%@ End:%@\n", (unsigned long)info.flyZoneID, info.name, info.unlockStartTime, info.unlockEndTime]];
                         }
                         ShowResult(resultMessage);
@@ -328,20 +335,20 @@
 
 - (void)onUpdateLoginState
 {
-    DJIUserAccountStatus state = [[DJIFlyZoneManager sharedInstance] getUserAccountStatus];
+    DJIUserAccountState state = [[DJISDKManager flyZoneManager] getUserAccountState];
     NSString* stateString = @"DJIUserAccountStatusUnknown";
     
     switch (state) {
-        case DJIUserAccountStatusNotLoggedIn:
+        case DJIUserAccountStateNotLoggedIn:
             stateString = @"DJIUserAccountStatusNotLoggin";
             break;
-        case DJIUserAccountStatusNotAuthorized:
+        case DJIUserAccountStateNotAuthorized:
             stateString = @"DJIUserAccountStatusNotVerified";
             break;
-        case DJIUserAccountStatusAuthorized:
+        case DJIUserAccountStateAuthorized:
             stateString = @"DJIUserAccountStatusSuccessful";
             break;
-        case DJIUserAccountStatusTokenOutOfDate:
+        case DJIUserAccountStateTokenOutOfDate:
             stateString = @"DJIUserAccountStatusTokenOutOfDate";
             break;
         default:
@@ -353,15 +360,15 @@
 
 - (void)onUpdateFlyZoneInfo
 {
-    [self.flyZoneDataTextView setText:[self.djiMapViewController fetchUpdateFlyZoneInfo]];
+    [self.showFlyZoneMessageTableView reloadData];
 }
 
 #pragma mark - DJIFlyZoneDelegate Method
 
-- (void)flyZoneManager:(DJIFlyZoneManager *)manager didUpdateFlyZoneStatus:(DJIFlyZoneState)status
+-(void)flyZoneManager:(DJIFlyZoneManager *)manager didUpdateFlyZoneState:(DJIFlyZoneState)state
 {
     NSString* flyZoneStatusString = @"Unknown";
-    switch (status) {
+    switch (state) {
         case DJIFlyZoneStateClear:
             flyZoneStatusString = @"NoRestriction";
             break;
@@ -391,11 +398,92 @@
     }
 }
 
-#pragma mark - DJISimulatorDelegate method
+#pragma mark - UITableViewDelgete
 
-- (void)simulator:(DJISimulator *)simulator updateSimulatorState:(DJISimulatorState *)state
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    return self.djiMapViewController.flyZones.count;
+}
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"flyzone-id"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"flyzone-id"];
+    }
+    
+    DJIFlyZoneInformation* flyZoneInfo = self.djiMapViewController.flyZones[indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%lu:%@:%@", (unsigned long)flyZoneInfo.flyZoneID, @(flyZoneInfo.category), flyZoneInfo.name];
+    cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    return cell;
+}
+
+- (NSString*)getFlyZoneCategoryString:(DJIFlyZoneGEOCategory)category
+{
+    switch (category) {
+        case DJIFlyZoneGEOCategoryWarning:
+            return @"Waring";
+        case DJIFlyZoneGEOCategoryRestricted:
+            return @"Restricted";
+        case DJIFlyZoneGEOCategoryAuthorization:
+            return @"Authorization";
+        case DJIFlyZoneGEOCategoryEnhancedWarning:
+            return @"EnhancedWarning";
+        default:
+            break;
+    }
+    return @"Unknown";
+}
+
+- (NSString*)formatSubFlyZoneInformtionString:(NSArray<DJISubFlyZoneInformation *> *)subFlyZoneInformations
+{
+    NSMutableString *subInfoString = [NSMutableString string];
+    for (DJISubFlyZoneInformation* subInformation in subFlyZoneInformations) {
+        [subInfoString appendString:@"-----------------\n"];
+        [subInfoString appendString:[NSString stringWithFormat:@"SubAreaID:%@\n", @(subInformation.areaID)]];
+        [subInfoString appendString:[NSString stringWithFormat:@"Graphic:%@\n", DJISubFlyZoneShapeCylinder == subInformation.shape ? @"Circle": @"Polygon"]];
+        [subInfoString appendString:[NSString stringWithFormat:@"MaximumFlightHeight:%ld\n", (long)subInformation.maximumFlightHeight]];
+        [subInfoString appendString:[NSString stringWithFormat:@"Radius:%f\n", subInformation.radius]];
+        [subInfoString appendString:[NSString stringWithFormat:@"Coordinate:(%f,%f)\n", subInformation.center.latitude, subInformation.center.longitude]];
+        for (NSValue* point in subInformation.vertices) {
+            CLLocationCoordinate2D coordinate = [point MKCoordinateValue];
+            [subInfoString appendString:[NSString stringWithFormat:@"     (%f,%f)\n", coordinate.latitude, coordinate.longitude]];
+        }
+        [subInfoString appendString:@"-----------------\n"];
+    }
+    return subInfoString;
+}
+
+- (NSString*)formatFlyZoneInformtionString:(DJIFlyZoneInformation*)information
+{
+    NSMutableString* infoString = [[NSMutableString alloc] init];
+    if (information) {
+        [infoString appendString:[NSString stringWithFormat:@"ID:%lu\n", (unsigned long)information.flyZoneID]];
+        [infoString appendString:[NSString stringWithFormat:@"Name:%@\n", information.name]];
+        [infoString appendString:[NSString stringWithFormat:@"Coordinate:(%f,%f)\n", information.center.latitude, information.center.longitude]];
+        [infoString appendString:[NSString stringWithFormat:@"Radius:%f\n", information.radius]];
+        [infoString appendString:[NSString stringWithFormat:@"StartTime:%@, EndTime:%@\n", information.startTime, information.endTime]];
+        [infoString appendString:[NSString stringWithFormat:@"unlockStartTime:%@, unlockEndTime:%@\n", information.unlockStartTime, information.unlockEndTime]];
+        [infoString appendString:[NSString stringWithFormat:@"GEOZoneType:%d\n", information.type]];
+        [infoString appendString:[NSString stringWithFormat:@"FlyZoneType:%@\n", information.shape == DJIFlyZoneShapeCylinder ? @"Cylinder" : @"Cone"]];
+        [infoString appendString:[NSString stringWithFormat:@"FlyZoneCategory:%@\n",[self getFlyZoneCategoryString:information.category]]];
+        
+        if (information.subFlyZones.count > 0) {
+            NSString* subInfoString = [self formatSubFlyZoneInformtionString:information.subFlyZones];
+            [infoString appendString:subInfoString];
+        }
+    }
+    NSString *result = [NSString stringWithString:infoString];
+    NSLog(@"%@", result);
+    return result;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.flyZoneInfoView.hidden = NO;
+    [self.flyZoneInfoView show];
+    DJIFlyZoneInformation* information = self.djiMapViewController.flyZones[indexPath.row];
+    [self.flyZoneInfoView writeStatus:[self formatFlyZoneInformtionString:information]];
 }
 
 @end
