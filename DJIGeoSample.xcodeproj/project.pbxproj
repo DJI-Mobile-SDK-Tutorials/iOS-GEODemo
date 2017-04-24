@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		166D6BA2D6E9D4FC33F80FDD /* libPods-DJIGeoSample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F55FA2AEF9EEEB631917769 /* libPods-DJIGeoSample.a */; };
+		A437B31F1E7AA50F0089C965 /* DJICircle.m in Sources */ = {isa = PBXBuildFile; fileRef = A437B3141E7AA50F0089C965 /* DJICircle.m */; };
+		A437B3201E7AA50F0089C965 /* DJIFlyLimitPolygonView.m in Sources */ = {isa = PBXBuildFile; fileRef = A437B3161E7AA50F0089C965 /* DJIFlyLimitPolygonView.m */; };
+		A437B3211E7AA50F0089C965 /* DJILimitSpaceOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = A437B3181E7AA50F0089C965 /* DJILimitSpaceOverlay.m */; };
+		A437B3221E7AA50F0089C965 /* DJIMapOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = A437B31A1E7AA50F0089C965 /* DJIMapOverlay.m */; };
+		A437B3231E7AA50F0089C965 /* DJIMapPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = A437B31C1E7AA50F0089C965 /* DJIMapPolygon.m */; };
+		A437B3241E7AA50F0089C965 /* DJIPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = A437B31E1E7AA50F0089C965 /* DJIPolygon.m */; };
+		A437B3461E7BEF490089C965 /* DJIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A437B3441E7BEF490089C965 /* DJIScrollView.m */; };
+		A437B3471E7BEF490089C965 /* DJIScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A437B3451E7BEF490089C965 /* DJIScrollView.xib */; };
 		A446D0E31D3F7DB400804A32 /* DJIAircraftAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A446D0E01D3F7DB400804A32 /* DJIAircraftAnnotation.m */; };
 		A446D0E41D3F7DB400804A32 /* DJIAircraftAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = A446D0E21D3F7DB400804A32 /* DJIAircraftAnnotationView.m */; };
 		A4B87ECE1D2A6EB600123466 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B87ECD1D2A6EB600123466 /* main.m */; };
@@ -42,6 +50,21 @@
 		775EE19841AAF3FB2E90EA53 /* Pods-DJIGeoSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJIGeoSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJIGeoSample/Pods-DJIGeoSample.release.xcconfig"; sourceTree = "<group>"; };
 		7F55FA2AEF9EEEB631917769 /* libPods-DJIGeoSample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DJIGeoSample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A41255AA1DCB172C002DF91B /* DJIGeoSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DJIGeoSample.entitlements; sourceTree = "<group>"; };
+		A437B3131E7AA50F0089C965 /* DJICircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJICircle.h; sourceTree = "<group>"; };
+		A437B3141E7AA50F0089C965 /* DJICircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJICircle.m; sourceTree = "<group>"; };
+		A437B3151E7AA50F0089C965 /* DJIFlyLimitPolygonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIFlyLimitPolygonView.h; sourceTree = "<group>"; };
+		A437B3161E7AA50F0089C965 /* DJIFlyLimitPolygonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIFlyLimitPolygonView.m; sourceTree = "<group>"; };
+		A437B3171E7AA50F0089C965 /* DJILimitSpaceOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJILimitSpaceOverlay.h; sourceTree = "<group>"; };
+		A437B3181E7AA50F0089C965 /* DJILimitSpaceOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJILimitSpaceOverlay.m; sourceTree = "<group>"; };
+		A437B3191E7AA50F0089C965 /* DJIMapOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIMapOverlay.h; sourceTree = "<group>"; };
+		A437B31A1E7AA50F0089C965 /* DJIMapOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIMapOverlay.m; sourceTree = "<group>"; };
+		A437B31B1E7AA50F0089C965 /* DJIMapPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIMapPolygon.h; sourceTree = "<group>"; };
+		A437B31C1E7AA50F0089C965 /* DJIMapPolygon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIMapPolygon.m; sourceTree = "<group>"; };
+		A437B31D1E7AA50F0089C965 /* DJIPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIPolygon.h; sourceTree = "<group>"; };
+		A437B31E1E7AA50F0089C965 /* DJIPolygon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIPolygon.m; sourceTree = "<group>"; };
+		A437B3431E7BEF490089C965 /* DJIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIScrollView.h; sourceTree = "<group>"; };
+		A437B3441E7BEF490089C965 /* DJIScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIScrollView.m; sourceTree = "<group>"; };
+		A437B3451E7BEF490089C965 /* DJIScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DJIScrollView.xib; sourceTree = "<group>"; };
 		A446D0DF1D3F7DB400804A32 /* DJIAircraftAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIAircraftAnnotation.h; sourceTree = "<group>"; };
 		A446D0E01D3F7DB400804A32 /* DJIAircraftAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJIAircraftAnnotation.m; sourceTree = "<group>"; };
 		A446D0E11D3F7DB400804A32 /* DJIAircraftAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIAircraftAnnotationView.h; sourceTree = "<group>"; };
@@ -124,6 +147,9 @@
 				A41255AA1DCB172C002DF91B /* DJIGeoSample.entitlements */,
 				A4B87EF41D2A71B200123466 /* DemoUtility.h */,
 				A4B87EF51D2A71B200123466 /* DemoUtility.m */,
+				A437B3431E7BEF490089C965 /* DJIScrollView.h */,
+				A437B3441E7BEF490089C965 /* DJIScrollView.m */,
+				A437B3451E7BEF490089C965 /* DJIScrollView.xib */,
 				A4B87ECF1D2A6EB600123466 /* AppDelegate.h */,
 				A4B87ED01D2A6EB600123466 /* AppDelegate.m */,
 				A4B87ED21D2A6EB600123466 /* RootViewController.h */,
@@ -183,6 +209,18 @@
 		A4B87F061D2A75B500123466 /* DJIOverlayViews */ = {
 			isa = PBXGroup;
 			children = (
+				A437B3131E7AA50F0089C965 /* DJICircle.h */,
+				A437B3141E7AA50F0089C965 /* DJICircle.m */,
+				A437B31D1E7AA50F0089C965 /* DJIPolygon.h */,
+				A437B31E1E7AA50F0089C965 /* DJIPolygon.m */,
+				A437B3151E7AA50F0089C965 /* DJIFlyLimitPolygonView.h */,
+				A437B3161E7AA50F0089C965 /* DJIFlyLimitPolygonView.m */,
+				A437B3171E7AA50F0089C965 /* DJILimitSpaceOverlay.h */,
+				A437B3181E7AA50F0089C965 /* DJILimitSpaceOverlay.m */,
+				A437B3191E7AA50F0089C965 /* DJIMapOverlay.h */,
+				A437B31A1E7AA50F0089C965 /* DJIMapOverlay.m */,
+				A437B31B1E7AA50F0089C965 /* DJIMapPolygon.h */,
+				A437B31C1E7AA50F0089C965 /* DJIMapPolygon.m */,
 				A4B87F071D2A75B500123466 /* DJIFlyZoneCircle.h */,
 				A4B87F081D2A75B500123466 /* DJIFlyZoneCircle.m */,
 				A4B87F091D2A75B500123466 /* DJIFlyZoneCircleView.h */,
@@ -260,6 +298,7 @@
 				A4B87EDC1D2A6EB600123466 /* LaunchScreen.storyboard in Resources */,
 				A4B87ED91D2A6EB600123466 /* Assets.xcassets in Resources */,
 				A4B87ED71D2A6EB600123466 /* Main.storyboard in Resources */,
+				A437B3471E7BEF490089C965 /* DJIScrollView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,7 +317,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		340E20457DB2513A6381C64C /* [CP] Copy Pods Resources */ = {
@@ -320,14 +359,21 @@
 			files = (
 				A4B87ED41D2A6EB600123466 /* RootViewController.m in Sources */,
 				A4B87F101D2A75B500123466 /* DJIFlyZoneCircleView.m in Sources */,
+				A437B3461E7BEF490089C965 /* DJIScrollView.m in Sources */,
 				A4B87EF61D2A71B200123466 /* DemoUtility.m in Sources */,
 				A446D0E41D3F7DB400804A32 /* DJIAircraftAnnotationView.m in Sources */,
 				A4B87F0E1D2A75B500123466 /* DJIMapViewController.m in Sources */,
+				A437B31F1E7AA50F0089C965 /* DJICircle.m in Sources */,
+				A437B3241E7AA50F0089C965 /* DJIPolygon.m in Sources */,
 				A446D0E31D3F7DB400804A32 /* DJIAircraftAnnotation.m in Sources */,
+				A437B3231E7AA50F0089C965 /* DJIMapPolygon.m in Sources */,
 				A4B87ED11D2A6EB600123466 /* AppDelegate.m in Sources */,
+				A437B3211E7AA50F0089C965 /* DJILimitSpaceOverlay.m in Sources */,
+				A437B3221E7AA50F0089C965 /* DJIMapOverlay.m in Sources */,
 				A4B87F0F1D2A75B500123466 /* DJIFlyZoneCircle.m in Sources */,
 				A4B87ECE1D2A6EB600123466 /* main.m in Sources */,
 				A4B87EF91D2A754000123466 /* DJIGeoDemoViewController.m in Sources */,
+				A437B3201E7AA50F0089C965 /* DJIFlyLimitPolygonView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,7 +495,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dji.DJIGeoSample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dji.DJIGeoSample1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -468,7 +514,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dji.DJIGeoSample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dji.DJIGeoSample1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

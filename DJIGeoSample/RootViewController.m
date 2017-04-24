@@ -27,15 +27,8 @@
 {
     [super viewDidAppear:animated];
     
-    NSString* appKey = @""; //TODO: Please enter your App Key here
-    
-    if ([appKey length] == 0) {
-        ShowResult(@"Please enter your App Key");
-    }
-    else
-    {
-        [DJISDKManager registerApp:appKey withDelegate:self];
-    }
+    //Please enter your App Key in the info.plist file.
+    [DJISDKManager registerAppWithDelegate:self];
     
     if(self.product){
         [self updateStatusBasedOn:self.product];
@@ -77,13 +70,12 @@
 }
 
 #pragma mark - DJISDKManager Delegate Methods
-
-- (void)sdkManagerDidRegisterAppWithError:(NSError *)error
+- (void)appRegisteredWithError:(NSError *)error
 {
     if (!error) {
         
         [DJISDKManager startConnectionToProduct];
-//        [DJISDKManager enterDebugModeWithDebugId:@"192.168.1.102"];
+//        [DJISDKManager enableBridgeModeWithBridgeAppIP:@"192.168.8.105"];
         
     }else
     {        
@@ -93,33 +85,38 @@
     
 }
 
-- (void)sdkManagerProductDidChangeFrom:(DJIBaseProduct *)oldProduct to:(DJIBaseProduct *)newProduct
+- (void)productConnected:(DJIBaseProduct *)product
 {
-    if (newProduct) {
-        self.product = newProduct;
+    if (product) {
+        self.product = product;
         [self.connectButton setEnabled:YES];
-        
-    } else {
-        
-        NSString* message = [NSString stringWithFormat:@"Connection lost. Back to root. "];
-        
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
-        UIAlertAction *backAction = [UIAlertAction actionWithTitle:@"Back" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            if (![self.navigationController.topViewController isKindOfClass:[RootViewController class]]) {
-                [self.navigationController popToRootViewControllerAnimated:NO];
-            }
-        }];
-        
-        UIAlertController* alertViewController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
-        [alertViewController addAction:cancelAction];
-        [alertViewController addAction:backAction];
-        [self presentViewController:alertViewController animated:YES completion:nil];
-        
-        [self.connectButton setEnabled:NO];
-        self.product = nil;
     }
     
-    [self updateStatusBasedOn:newProduct];
+    [self updateStatusBasedOn:product];
 }
+
+- (void)productDisconnected
+{
+    NSString* message = [NSString stringWithFormat:@"Connection lost. Back to root. "];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *backAction = [UIAlertAction actionWithTitle:@"Back" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if (![self.navigationController.topViewController isKindOfClass:[RootViewController class]]) {
+            [self.navigationController popToRootViewControllerAnimated:NO];
+        }
+    }];
+    
+    UIAlertController* alertViewController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertViewController addAction:cancelAction];
+    [alertViewController addAction:backAction];
+    [self presentViewController:alertViewController animated:YES completion:nil];
+    
+    [self.connectButton setEnabled:NO];
+    self.product = nil;
+    
+    [self updateStatusBasedOn:self.product];
+
+}
+
 
 @end

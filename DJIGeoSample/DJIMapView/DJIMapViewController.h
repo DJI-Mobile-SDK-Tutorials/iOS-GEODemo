@@ -10,6 +10,9 @@
 
 @interface DJIMapViewController : NSObject
 
+@property (nonatomic, strong) NSMutableArray *flyZones;
+
+
 - (id)initWithMap:(MKMapView*)mapView;
 
 /**
@@ -30,9 +33,5 @@
  */
 - (void)updateFlyZonesInSurroundingArea;
 
-/**
- *  Get Update Fly Zone Info Strings
- **/
-- (NSString *)fetchUpdateFlyZoneInfo;
 
 @end
