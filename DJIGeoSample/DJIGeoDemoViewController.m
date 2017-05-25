@@ -135,7 +135,7 @@
 
 - (IBAction)onLoginButtonClicked:(id)sender
 {
-    [[DJISDKManager flyZoneManager] logIntoDJIUserAccountWithCompletion:^(DJIUserAccountState status, NSError * _Nullable error) {
+    [[DJISDKManager userAccountManager] logIntoDJIUserAccountWithAuthorizationRequired:YES withCompletion:^(DJIUserAccountState status, NSError * _Nullable error) {
         if (error) {
             ShowResult([NSString stringWithFormat:@"GEO Login Error: %@", error.description]);
             
@@ -147,13 +147,14 @@
 
 - (IBAction)onLogoutButtonClicked:(id)sender {
     
-    [[DJISDKManager flyZoneManager] logOutOfDJIUserAccountWithCompletion:^(NSError * _Nullable error) {
+    [[DJISDKManager userAccountManager] logOutOfDJIUserAccountWithCompletion:^(NSError * _Nullable error) {
         if (error) {
             ShowResult(@"Login out error:%@", error.description);
         } else {
             ShowResult(@"Login out success");
         }
     }];
+    
 }
 
 - (IBAction)onUnlockButtonClicked:(id)sender
@@ -335,7 +336,8 @@
 
 - (void)onUpdateLoginState
 {
-    DJIUserAccountState state = [[DJISDKManager flyZoneManager] getUserAccountState];
+    
+    DJIUserAccountState state = [[DJISDKManager userAccountManager] getUserAccountState];
     NSString* stateString = @"DJIUserAccountStatusUnknown";
     
     switch (state) {
@@ -392,9 +394,9 @@
 
 - (void)flightController:(DJIFlightController *)fc didUpdateState:(DJIFlightControllerState *)state
 {
-    if (CLLocationCoordinate2DIsValid(state.aircraftLocation)) {
+    if (CLLocationCoordinate2DIsValid(state.aircraftLocation.coordinate)) {
         double heading = RADIAN(state.attitude.yaw);
-        [self.djiMapViewController updateAircraftLocation:state.aircraftLocation withHeading:heading];
+        [self.djiMapViewController updateAircraftLocation:state.aircraftLocation.coordinate withHeading:heading];
     }
 }
 
