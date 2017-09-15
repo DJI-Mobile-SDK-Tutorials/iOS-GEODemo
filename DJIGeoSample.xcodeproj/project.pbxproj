@@ -490,7 +490,7 @@
 				CODE_SIGN_ENTITLEMENTS = DJIGeoSample/DJIGeoSample.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7UL3LRJL93;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = DJIGeoSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -509,7 +509,7 @@
 				CODE_SIGN_ENTITLEMENTS = DJIGeoSample/DJIGeoSample.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7UL3LRJL93;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = DJIGeoSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
