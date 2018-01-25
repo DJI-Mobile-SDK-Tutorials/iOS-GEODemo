@@ -316,7 +316,7 @@
             self.selectedFlyZoneInfo = [self.unlockedFlyZoneInfos objectAtIndex:row];
         }
     } else if (component == 1) {
-        self.isUnlockEnable = [pickerView selectedRowInComponent:1] == 0 ? NO: YES;
+        self.isUnlockEnable = [pickerView selectedRowInComponent:1] == 0 ? YES: NO;
     }
 }
 
