@@ -23,22 +23,22 @@
         self.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.2];
         self.strokeColor = [[UIColor redColor] colorWithAlphaComponent:0.9];
         
-        if (circle.category == DJIFlyZoneGEOCategoryAuthorization) {
+        if (circle.category == DJIFlyZoneCategoryAuthorization) {
             
             self.fillColor = [AuthorizationColor colorWithAlphaComponent:0.1];
             self.strokeColor = [AuthorizationColor colorWithAlphaComponent:1.0];
             
-        } else if (circle.category == DJIFlyZoneGEOCategoryRestricted) {
+        } else if (circle.category == DJIFlyZoneCategoryRestricted) {
 
             self.fillColor = [RestrictedColor colorWithAlphaComponent:0.1];
             self.strokeColor = [RestrictedColor colorWithAlphaComponent:1.0];
             
-        } else if (circle.category == DJIFlyZoneGEOCategoryWarning) {
+        } else if (circle.category == DJIFlyZoneCategoryWarning) {
             
             self.fillColor = [WarningColor colorWithAlphaComponent:0.1];
             self.strokeColor = [WarningColor colorWithAlphaComponent:1.0];
             
-        } else if (circle.category == DJIFlyZoneGEOCategoryEnhancedWarning) {
+        } else if (circle.category == DJIFlyZoneCategoryEnhancedWarning) {
             
             self.fillColor  = [EnhancedWarningColor colorWithAlphaComponent:0.1];
             self.strokeColor = [EnhancedWarningColor colorWithAlphaComponent:1.0f];

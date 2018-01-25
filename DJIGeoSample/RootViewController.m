@@ -74,6 +74,8 @@
 {
     if (!error) {
         
+        ShowResult(@"Registration Success");
+
         [DJISDKManager startConnectionToProduct];
 //        [DJISDKManager enableBridgeModeWithBridgeAppIP:@"192.168.8.105"];
         

@@ -12,7 +12,7 @@
 #import "DemoUtility.h"
 #import "DJIScrollView.h"
 
-@interface DJIGeoDemoViewController ()<DJIFlyZoneDelegate, DJIFlightControllerDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface DJIGeoDemoViewController ()<DJIFlyZoneDelegate, DJIFlightControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
@@ -21,13 +21,16 @@
 @property (weak, nonatomic) IBOutlet UIButton *unlockBtn;
 @property (weak, nonatomic) IBOutlet UILabel *flyZoneStatusLabel;
 @property (weak, nonatomic) IBOutlet UIButton *getUnlockButton;
-@property (weak, nonatomic) IBOutlet UIButton *enableGEOButton;
+@property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
+@property (weak, nonatomic) IBOutlet UIView *pickerContainerView;
 
 @property (nonatomic, strong) DJIMapViewController* djiMapViewController;
 @property (nonatomic, strong) NSTimer* updateLoginStateTimer;
 @property (nonatomic, strong) NSTimer* updateFlyZoneDataTimer;
 @property (nonatomic, strong) NSMutableArray<NSNumber *> * unlockFlyZoneIDs;
-@property (nonatomic, readwrite) BOOL isGEOSystemEnabled;
+@property (nonatomic, strong) NSMutableArray<DJIFlyZoneInformation *> * unlockedFlyZoneInfos;
+@property (nonatomic, strong) DJIFlyZoneInformation *selectedFlyZoneInfo;
+@property (nonatomic) BOOL isUnlockEnable;
 @property (weak, nonatomic) IBOutlet UITableView *showFlyZoneMessageTableView;
 @property(nonatomic, strong) DJIScrollView *flyZoneInfoView;
 
@@ -40,6 +43,8 @@
     [super viewDidLoad];
     
     self.title = @"DJI GEO Demo";
+    
+    [self.pickerContainerView setHidden:YES];
 
     DJIAircraft* aircraft = [DemoUtility fetchAircraft];
     if (aircraft == nil) return;
@@ -67,18 +72,6 @@
         }];
 
     }
-    
-    WeakRef(target);
-    
-    [[DJISDKManager flyZoneManager] getGEOSystemEnabled:^(BOOL enabled, NSError * _Nullable error) {
-        
-        WeakReturn(target);
-        if (error) {
-            ShowResult(@"Get GEOEnable Status Error:%@", error.description);
-        } else {
-            [target setEnableGEOButtonText:enabled];
-        }
-    }];
     
     self.updateLoginStateTimer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(onUpdateLoginState) userInfo:nil repeats:YES];
     self.updateFlyZoneDataTimer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(onUpdateFlyZoneInfo) userInfo:nil repeats:YES];
@@ -114,21 +107,10 @@
 
     self.djiMapViewController = [[DJIMapViewController alloc] initWithMap:self.mapView];
     self.unlockFlyZoneIDs = [[NSMutableArray alloc] init];
-    self.isGEOSystemEnabled = NO;
+    self.unlockedFlyZoneInfos = [[NSMutableArray alloc] init];
     self.flyZoneInfoView = [DJIScrollView viewWithViewController:self];
     self.flyZoneInfoView.hidden = YES;
     [self.flyZoneInfoView setDefaultSize];
-}
-
-- (void) setEnableGEOButtonText:(BOOL)enabled
-{
-    self.isGEOSystemEnabled = enabled;
-    
-    if (enabled) {
-        [self.enableGEOButton setTitle:@"DisableGEO" forState:UIControlStateNormal];
-    } else {
-        [self.enableGEOButton setTitle:@"EnableGEO" forState:UIControlStateNormal];
-    }
 }
 
 #pragma mark IBAction Methods
@@ -164,11 +146,21 @@
 
 - (IBAction)onGetUnlockButtonClicked:(id)sender
 {
+    
+    WeakRef(target);
     [[DJISDKManager flyZoneManager] getUnlockedFlyZonesWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
+        
+        WeakReturn(target);
+
         if (error) {
             ShowResult(@"Get Unlock Error:%@", error.description);
         } else {
             NSString* unlockInfo = [NSString stringWithFormat:@"unlock zone count = %lu\n", infos.count];
+            
+            if ([target.unlockedFlyZoneInfos count] > 0) {
+                [target.unlockedFlyZoneInfos removeAllObjects];
+            }
+            [target.unlockedFlyZoneInfos addObjectsFromArray:infos];
             
             for (DJIFlyZoneInformation* info in infos) {
                 unlockInfo = [unlockInfo stringByAppendingString:[NSString stringWithFormat:@"ID:%lu Name:%@ Begin:%@ end:%@\n", (unsigned long)info.flyZoneID, info.name, info.unlockStartTime, info.unlockEndTime]];
@@ -177,29 +169,6 @@
         }
     }];
     
-}
-
-- (IBAction)onEnableGEOButtonClicked:(id)sender
-{
-    WeakRef(target);
-    [[DJISDKManager flyZoneManager] setGEOSystemEnabled:!self.isGEOSystemEnabled withCompletion:^(NSError * _Nullable error) {
-        WeakReturn(target);
-
-        if (error) {
-            ShowResult(@"Set GEO Enable status error:%@", error.description);
-        } else {
-            
-            [[DJISDKManager flyZoneManager] getGEOSystemEnabled:^(BOOL enabled, NSError * _Nullable error) {
-                if (error) {
-                    ShowResult(@"Get GEOEnable Status Error:%@", error.description);
-                } else {
-                    ShowResult(@"Current GEO status is %@", enabled ? @"On" : @"Off");
-                    [target setEnableGEOButtonText:enabled];
-                }
-                
-            }];
-        }
-    }];
 }
 
 - (IBAction)onStartSimulatorButtonClicked:(id)sender {
@@ -271,6 +240,84 @@
 
         }
     }];
+}
+
+- (IBAction)enableUnlocking:(id)sender {
+    
+    [self.pickerContainerView setHidden:NO];
+    [self.pickerView reloadAllComponents];
+}
+
+- (IBAction)conformButtonAction:(id)sender {
+
+    if (self.selectedFlyZoneInfo) {
+        [self.selectedFlyZoneInfo setUnlockingEnabled:self.isUnlockEnable withCompletion:^(NSError * _Nullable error) {
+            
+            if (error) {
+                ShowResult(@"Set unlocking enabled failed %@", error.description);
+            }else
+            {
+                ShowResult(@"Set unlocking enabled success");
+            }
+        }];
+    }
+    
+}
+
+- (IBAction)cancelButtonAction:(id)sender {
+    
+    [self.pickerContainerView setHidden:YES];
+}
+
+#pragma mark - UIPickerViewDataSource
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 2;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    
+    NSInteger rowNum = 0;
+    
+    if (component == 0) {
+        rowNum = [self.unlockedFlyZoneInfos count];
+    } else if (component == 1){
+        rowNum = 2;
+    }
+    return rowNum;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    
+    NSString *title = @"";
+    
+    if (component == 0) {
+      
+        DJIFlyZoneInformation *infoObject = [self.unlockedFlyZoneInfos objectAtIndex:row];
+        title = [NSString stringWithFormat:@"%lu", (unsigned long)infoObject.flyZoneID];
+        
+    } else if (component == 1) {
+        
+        if (row == 0) {
+            title = @"YES";
+        } else {
+            title = @"NO";
+        }
+    }
+    
+    return title;
+}
+
+#pragma mark - UIPickerViewDelegate
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    
+    if (component == 0) {
+        if ([self.unlockedFlyZoneInfos count] > row) {
+            self.selectedFlyZoneInfo = [self.unlockedFlyZoneInfos objectAtIndex:row];
+        }
+    } else if (component == 1) {
+        self.isUnlockEnable = [pickerView selectedRowInComponent:1] == 0 ? NO: YES;
+    }
 }
 
 - (void)showFlyZoneIDInputView
@@ -390,6 +437,10 @@
     [self.flyZoneStatusLabel setText:flyZoneStatusString];
 }
 
+- (void)flyZoneManager:(nonnull DJIFlyZoneManager *)manager didUpdateBasicDatabaseUpgradeProgress:(float)progress andError:(NSError * _Nullable)error {
+    
+}
+
 #pragma mark - DJIFlightControllerDelegate Method
 
 - (void)flightController:(DJIFlightController *)fc didUpdateState:(DJIFlightControllerState *)state
@@ -420,16 +471,16 @@
     return cell;
 }
 
-- (NSString*)getFlyZoneCategoryString:(DJIFlyZoneGEOCategory)category
+- (NSString*)getFlyZoneCategoryString:(DJIFlyZoneCategory)category
 {
     switch (category) {
-        case DJIFlyZoneGEOCategoryWarning:
+        case DJIFlyZoneCategoryWarning:
             return @"Waring";
-        case DJIFlyZoneGEOCategoryRestricted:
+        case DJIFlyZoneCategoryRestricted:
             return @"Restricted";
-        case DJIFlyZoneGEOCategoryAuthorization:
+        case DJIFlyZoneCategoryAuthorization:
             return @"Authorization";
-        case DJIFlyZoneGEOCategoryEnhancedWarning:
+        case DJIFlyZoneCategoryEnhancedWarning:
             return @"EnhancedWarning";
         default:
             break;
