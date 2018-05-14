@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1449B32720917944003955AE /* DJIGeoUnlockingGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1449B32620917944003955AE /* DJIGeoUnlockingGroupViewController.m */; };
+		1449B32E2091832D003955AE /* DJIGeoGroupInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1449B32D2091832D003955AE /* DJIGeoGroupInfoViewController.m */; };
 		166D6BA2D6E9D4FC33F80FDD /* libPods-DJIGeoSample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F55FA2AEF9EEEB631917769 /* libPods-DJIGeoSample.a */; };
+		246F1AB42047E9640038B95D /* DJIGeoCustomUnlockingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 246F1AB32047E9640038B95D /* DJIGeoCustomUnlockingViewController.m */; };
+		246F1AB92047F2870038B95D /* DJIGeoCustomZoneDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 246F1AB82047F2870038B95D /* DJIGeoCustomZoneDetailViewController.m */; };
 		A437B31F1E7AA50F0089C965 /* DJICircle.m in Sources */ = {isa = PBXBuildFile; fileRef = A437B3141E7AA50F0089C965 /* DJICircle.m */; };
 		A437B3201E7AA50F0089C965 /* DJIFlyLimitPolygonView.m in Sources */ = {isa = PBXBuildFile; fileRef = A437B3161E7AA50F0089C965 /* DJIFlyLimitPolygonView.m */; };
 		A437B3211E7AA50F0089C965 /* DJILimitSpaceOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = A437B3181E7AA50F0089C965 /* DJILimitSpaceOverlay.m */; };
@@ -46,7 +50,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1449B32520917944003955AE /* DJIGeoUnlockingGroupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJIGeoUnlockingGroupViewController.h; sourceTree = "<group>"; };
+		1449B32620917944003955AE /* DJIGeoUnlockingGroupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJIGeoUnlockingGroupViewController.m; sourceTree = "<group>"; };
+		1449B32C2091832D003955AE /* DJIGeoGroupInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJIGeoGroupInfoViewController.h; sourceTree = "<group>"; };
+		1449B32D2091832D003955AE /* DJIGeoGroupInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJIGeoGroupInfoViewController.m; sourceTree = "<group>"; };
 		1E337176DA7FBD1E2C722E3D /* Pods-DJIGeoSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJIGeoSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJIGeoSample/Pods-DJIGeoSample.debug.xcconfig"; sourceTree = "<group>"; };
+		246F1AB22047E9640038B95D /* DJIGeoCustomUnlockingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJIGeoCustomUnlockingViewController.h; sourceTree = "<group>"; };
+		246F1AB32047E9640038B95D /* DJIGeoCustomUnlockingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJIGeoCustomUnlockingViewController.m; sourceTree = "<group>"; };
+		246F1AB72047F2870038B95D /* DJIGeoCustomZoneDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJIGeoCustomZoneDetailViewController.h; sourceTree = "<group>"; };
+		246F1AB82047F2870038B95D /* DJIGeoCustomZoneDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJIGeoCustomZoneDetailViewController.m; sourceTree = "<group>"; };
 		775EE19841AAF3FB2E90EA53 /* Pods-DJIGeoSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJIGeoSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-DJIGeoSample/Pods-DJIGeoSample.release.xcconfig"; sourceTree = "<group>"; };
 		7F55FA2AEF9EEEB631917769 /* libPods-DJIGeoSample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DJIGeoSample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A41255AA1DCB172C002DF91B /* DJIGeoSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DJIGeoSample.entitlements; sourceTree = "<group>"; };
@@ -156,6 +168,14 @@
 				A4B87ED31D2A6EB600123466 /* RootViewController.m */,
 				A4B87EF71D2A754000123466 /* DJIGeoDemoViewController.h */,
 				A4B87EF81D2A754000123466 /* DJIGeoDemoViewController.m */,
+				246F1AB22047E9640038B95D /* DJIGeoCustomUnlockingViewController.h */,
+				246F1AB32047E9640038B95D /* DJIGeoCustomUnlockingViewController.m */,
+				1449B32520917944003955AE /* DJIGeoUnlockingGroupViewController.h */,
+				1449B32620917944003955AE /* DJIGeoUnlockingGroupViewController.m */,
+				1449B32C2091832D003955AE /* DJIGeoGroupInfoViewController.h */,
+				1449B32D2091832D003955AE /* DJIGeoGroupInfoViewController.m */,
+				246F1AB72047F2870038B95D /* DJIGeoCustomZoneDetailViewController.h */,
+				246F1AB82047F2870038B95D /* DJIGeoCustomZoneDetailViewController.m */,
 				A4B87ED51D2A6EB600123466 /* Main.storyboard */,
 				A4B87EFC1D2A75B500123466 /* DJIMapView */,
 				A4B87ED81D2A6EB600123466 /* Assets.xcassets */,
@@ -312,9 +332,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DJIGeoSample-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -342,9 +365,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-DJIGeoSample/Pods-DJIGeoSample-frameworks.sh",
+				"${PODS_ROOT}/DJI-SDK-iOS/iOS_Mobile_SDK/DJISDK.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DJISDK.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -365,14 +391,18 @@
 				A446D0E41D3F7DB400804A32 /* DJIAircraftAnnotationView.m in Sources */,
 				A4B87F0E1D2A75B500123466 /* DJIMapViewController.m in Sources */,
 				A437B31F1E7AA50F0089C965 /* DJICircle.m in Sources */,
+				1449B32720917944003955AE /* DJIGeoUnlockingGroupViewController.m in Sources */,
 				A437B3241E7AA50F0089C965 /* DJIPolygon.m in Sources */,
 				A446D0E31D3F7DB400804A32 /* DJIAircraftAnnotation.m in Sources */,
+				1449B32E2091832D003955AE /* DJIGeoGroupInfoViewController.m in Sources */,
 				A437B3231E7AA50F0089C965 /* DJIMapPolygon.m in Sources */,
 				A4B87ED11D2A6EB600123466 /* AppDelegate.m in Sources */,
 				A437B3211E7AA50F0089C965 /* DJILimitSpaceOverlay.m in Sources */,
 				A437B3221E7AA50F0089C965 /* DJIMapOverlay.m in Sources */,
 				A4B87F0F1D2A75B500123466 /* DJIFlyZoneCircle.m in Sources */,
+				246F1AB42047E9640038B95D /* DJIGeoCustomUnlockingViewController.m in Sources */,
 				A4B87ECE1D2A6EB600123466 /* main.m in Sources */,
+				246F1AB92047F2870038B95D /* DJIGeoCustomZoneDetailViewController.m in Sources */,
 				A4B87EF91D2A754000123466 /* DJIGeoDemoViewController.m in Sources */,
 				A437B3201E7AA50F0089C965 /* DJIFlyLimitPolygonView.m in Sources */,
 			);
@@ -496,7 +526,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dji.DJIGeoSample1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dji.DJIGeoSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -515,7 +545,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dji.DJIGeoSample1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dji.DJIGeoSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -33,6 +33,7 @@
 @property (nonatomic) BOOL isUnlockEnable;
 @property (weak, nonatomic) IBOutlet UITableView *showFlyZoneMessageTableView;
 @property(nonatomic, strong) DJIScrollView *flyZoneInfoView;
+@property (weak, nonatomic) IBOutlet UIButton *customUnlockButton;
 
 @end
 
@@ -70,7 +71,7 @@
                 NSLog(@"setFlyZoneLimitationEnabled success");
             }
         }];
-
+        
     }
     
     self.updateLoginStateTimer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(onUpdateLoginState) userInfo:nil repeats:YES];
@@ -146,12 +147,11 @@
 
 - (IBAction)onGetUnlockButtonClicked:(id)sender
 {
-    
     WeakRef(target);
-    [[DJISDKManager flyZoneManager] getUnlockedFlyZonesWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
+    
+    [[DJISDKManager flyZoneManager] getUnlockedFlyZonesForAircraftWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
         
         WeakReturn(target);
-
         if (error) {
             ShowResult(@"Get Unlock Error:%@", error.description);
         } else {
@@ -167,6 +167,7 @@
             };
             ShowResult(@"%@", unlockInfo);
         }
+        
     }];
     
 }
@@ -356,8 +357,7 @@
             if (error) {
                 ShowResult(@"unlock fly zones failed%@", error.description);
             } else {
-                                
-                [[DJISDKManager flyZoneManager] getUnlockedFlyZonesWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
+                [[DJISDKManager flyZoneManager] getUnlockedFlyZonesForAircraftWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
                     if (error) {
                         ShowResult(@"get unlocked fly zone failed:%@", error.description);
                     } else {
