@@ -384,7 +384,7 @@
 - (void)onUpdateLoginState
 {
     
-    DJIUserAccountState state = [[DJISDKManager userAccountManager] getUserAccountState];
+    DJIUserAccountState state = [DJISDKManager userAccountManager].userAccountState;
     NSString* stateString = @"DJIUserAccountStatusUnknown";
     
     switch (state) {
