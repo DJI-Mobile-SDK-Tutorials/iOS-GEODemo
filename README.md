@@ -8,7 +8,7 @@
 
  - iOS 9.0+
  - Xcode 8.0+
- - DJI iOS SDK 4.7
+ - DJI iOS SDK 4.7.1
 
 ## SDK Installation with CocoaPods
 
@@ -37,7 +37,7 @@ If you install it successfully, you should get the messages similar to the follo
 ~~~
 Analyzing dependencies
 Downloading dependencies
-Installing DJI-SDK-iOS (4.7)
+Installing DJI-SDK-iOS (4.7.1)
 Generating Pods project
 Integrating client project
 
@@ -57,7 +57,7 @@ installed.
 
 For this demo's tutorial: **DJI GEO System Tutorial**, please refer to <https://developer.dji.com/mobile-sdk/documentation/ios-tutorials/GEODemo.html>.
 
-> Note: This demo's tutorial will be updated to iOS SDK 4.7 soon.
+> Note: This demo's tutorial will be updated to iOS SDK 4.7.1 soon.
 
 ## Feedback
 
