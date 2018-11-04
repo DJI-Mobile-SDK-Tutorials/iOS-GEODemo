@@ -1,9 +1,8 @@
 //
 //  DemoUtility.m
-//  DJISimulatorDemo
+//  DJIGeoSample
 //
-//  Created by DJI on 8/6/2016.
-//  Copyright © 2016 Demo. All rights reserved.
+//  Copyright © 2016 DJI. All rights reserved.
 //
 
 #import "DemoUtility.h"

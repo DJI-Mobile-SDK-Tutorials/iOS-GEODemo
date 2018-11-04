@@ -2,7 +2,6 @@
 //  DJIGeoDemoViewController.m
 //  DJIGeoSample
 //
-//  Created by DJI on 4/7/2016.
 //  Copyright © 2016 DJI. All rights reserved.
 //
 
@@ -65,13 +64,17 @@
         
         [aircraft.flightController.simulator setFlyZoneLimitationEnabled:YES withCompletion:^(NSError * _Nullable error) {
             if (error) {
-                NSLog(@"setFlyZoneLimitationEnabled failed");
-            }else
-            {
+                ShowResult(@"setFlyZoneLimitationEnabled failed:%@", error.description);
+            } else {
                 NSLog(@"setFlyZoneLimitationEnabled success");
             }
         }];
         
+//        if (!DJISDKManager.flyZoneManager.isCustomUnlockZoneSupported) {
+//            self.customUnlockButton.hidden = NO;
+//        } else {
+//            self.customUnlockButton.hidden = YES;
+//        }
     }
     
     self.updateLoginStateTimer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(onUpdateLoginState) userInfo:nil repeats:YES];
@@ -89,9 +92,8 @@
     
     [aircraft.flightController.simulator setFlyZoneLimitationEnabled:NO withCompletion:^(NSError * _Nullable error) {
         if (error) {
-            NSLog(@"setFlyZoneLimitationEnabled failed");
-        }else
-        {
+            ShowResult(@"setFlyZoneLimitationEnabled failed:%@", error.description);
+        } else {
             NSLog(@"setFlyZoneLimitationEnabled success");
         }
     }];
@@ -147,28 +149,29 @@
 
 - (IBAction)onGetUnlockButtonClicked:(id)sender
 {
-    WeakRef(target);
     
-    [[DJISDKManager flyZoneManager] getUnlockedFlyZonesForAircraftWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
-        
-        WeakReturn(target);
-        if (error) {
-            ShowResult(@"Get Unlock Error:%@", error.description);
-        } else {
-            NSString* unlockInfo = [NSString stringWithFormat:@"unlock zone count = %lu\n", infos.count];
-            
-            if ([target.unlockedFlyZoneInfos count] > 0) {
-                [target.unlockedFlyZoneInfos removeAllObjects];
-            }
-            [target.unlockedFlyZoneInfos addObjectsFromArray:infos];
-            
-            for (DJIFlyZoneInformation* info in infos) {
-                unlockInfo = [unlockInfo stringByAppendingString:[NSString stringWithFormat:@"ID:%lu Name:%@ Begin:%@ end:%@\n", (unsigned long)info.flyZoneID, info.name, info.unlockStartTime, info.unlockEndTime]];
-            };
-            ShowResult(@"%@", unlockInfo);
-        }
-        
-    }];
+	WeakRef(target);
+	
+	[[DJISDKManager flyZoneManager] getUnlockedFlyZonesForAircraftWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
+		
+		WeakReturn(target);
+		if (error) {
+			ShowResult(@"Get Unlock Error:%@", error.description);
+		} else {
+			NSString* unlockInfo = [NSString stringWithFormat:@"unlock zone count = %lu\n", infos.count];
+			
+			if ([target.unlockedFlyZoneInfos count] > 0) {
+				[target.unlockedFlyZoneInfos removeAllObjects];
+			}
+			[target.unlockedFlyZoneInfos addObjectsFromArray:infos];
+			
+			for (DJIFlyZoneInformation* info in infos) {
+				unlockInfo = [unlockInfo stringByAppendingString:[NSString stringWithFormat:@"ID:%lu Name:%@ Begin:%@ end:%@\n", (unsigned long)info.flyZoneID, info.name, info.unlockStartTime, info.unlockEndTime]];
+			};
+			ShowResult(@"%@", unlockInfo);
+		}
+		
+	}];
     
 }
 
@@ -350,27 +353,27 @@
             int flyZoneID = [content intValue];
             [target.unlockFlyZoneIDs addObject:@(flyZoneID)];
         }
-        [[DJISDKManager flyZoneManager] unlockFlyZones:target.unlockFlyZoneIDs withCompletion:^(NSError * _Nullable error) {
-            
-            [target.unlockFlyZoneIDs removeAllObjects];
-
-            if (error) {
-                ShowResult(@"unlock fly zones failed%@", error.description);
-            } else {
-                [[DJISDKManager flyZoneManager] getUnlockedFlyZonesForAircraftWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
-                    if (error) {
-                        ShowResult(@"get unlocked fly zone failed:%@", error.description);
-                    } else {
-                        NSString* resultMessage = [NSString stringWithFormat:@"unlock zone: %tu ", [infos count]];
-                        for (int i = 0; i < infos.count; ++i) {
-                            DJIFlyZoneInformation* info = [infos objectAtIndex:i];
-                            resultMessage = [resultMessage stringByAppendingString:[NSString stringWithFormat:@"\n ID:%lu Name:%@ Begin:%@ End:%@\n", (unsigned long)info.flyZoneID, info.name, info.unlockStartTime, info.unlockEndTime]];
-                        }
-                        ShowResult(resultMessage);
-                    }
-                }];
-            }
-        }];
+		[[DJISDKManager flyZoneManager] unlockFlyZones:target.unlockFlyZoneIDs withCompletion:^(NSError * _Nullable error) {
+			
+			[target.unlockFlyZoneIDs removeAllObjects];
+			
+			if (error) {
+				ShowResult(@"unlock fly zones failed%@", error.description);
+			} else {
+				[[DJISDKManager flyZoneManager] getUnlockedFlyZonesForAircraftWithCompletion:^(NSArray<DJIFlyZoneInformation *> * _Nullable infos, NSError * _Nullable error) {
+					if (error) {
+						ShowResult(@"get unlocked fly zone failed:%@", error.description);
+					} else {
+						NSString* resultMessage = [NSString stringWithFormat:@"unlock zone: %tu ", [infos count]];
+						for (int i = 0; i < infos.count; ++i) {
+							DJIFlyZoneInformation* info = [infos objectAtIndex:i];
+							resultMessage = [resultMessage stringByAppendingString:[NSString stringWithFormat:@"\n ID:%lu Name:%@ Begin:%@ End:%@\n", (unsigned long)info.flyZoneID, info.name, info.unlockStartTime, info.unlockEndTime]];
+						}
+						ShowResult(resultMessage);
+					}
+				}];
+			}
+		}];
     }];
     
     [alertController addAction:cancelAction];
@@ -384,7 +387,7 @@
 - (void)onUpdateLoginState
 {
     
-    DJIUserAccountState state = [DJISDKManager userAccountManager].userAccountState;
+	DJIUserAccountState state = [DJISDKManager userAccountManager].userAccountState;
     NSString* stateString = @"DJIUserAccountStatusUnknown";
     
     switch (state) {
@@ -527,7 +530,6 @@
         }
     }
     NSString *result = [NSString stringWithString:infoString];
-    NSLog(@"%@", result);
     return result;
 }
 

@@ -1,9 +1,8 @@
 //
 //  DJIMapView.m
-//  Phantom3
+//  DJIGeoSample
 //
-//  Created by Jayce Yang on 14-4-10.
-//  Copyright (c) 2014年 Jerome.zhang. All rights reserved.
+//  Copyright © 2014 DJI. All rights reserved.
 //
 
 #import "DJIMapViewController.h"
@@ -17,6 +16,7 @@
 #import "DJIMapPolygon.h"
 #import "DJIFlyLimitPolygonView.h"
 #import "DJICircle.h"
+#import "DJICustomUnlockOverlay.h"
 
 #define UPDATETIMESTAMP (10)
 
@@ -27,6 +27,7 @@
 @property (weak, nonatomic) MKMapView *mapView;
 @property (nonatomic, strong) DJIAircraftAnnotation* aircraftAnnotation;
 @property (nonatomic, strong) NSMutableArray<DJIMapOverlay *> *mapOverlays;
+@property (nonatomic, strong) NSMutableArray<DJIMapOverlay *> *customUnlockOverlays;
 @property (nonatomic, assign) NSTimeInterval lastUpdateTime;
 
 @end
@@ -145,6 +146,7 @@
 {
     if ([self canUpdateLimitFlyZoneWithCoordinate]) {
         [self updateFlyZonesInSurroundingArea];
+		[self updateCustomUnlockZone];
     }
 }
 
@@ -173,7 +175,6 @@
         if (nil == error && nil != infos) {
             [target updateFlyZoneOverlayWithInfos:infos];
         }else{
-            NSLog(@"Get fly zone failed: %@", error.description);
             if (target.mapOverlays.count > 0) {
                 [target removeMapOverlays:target.mapOverlays];
             }
@@ -223,6 +224,51 @@
 }
 
 
+- (void) updateCustomUnlockZone
+{
+	WeakRef(target);
+	NSArray* zones = [[DJISDKManager flyZoneManager] getCustomUnlockZonesFromAircraft];
+	
+	if (zones.count > 0) {
+		[[DJISDKManager flyZoneManager] getEnabledCustomUnlockZoneWithCompletion:^(DJICustomUnlockZone * _Nullable zone, NSError * _Nullable error) {
+			if (!error && zone) {
+				[target updateCustomUnlockWithSpaces:@[zone] andEnabledZone:zone];
+			}
+		}];
+	} else {
+		if (target.customUnlockOverlays.count > 0) {
+			[target removeMapOverlays:self.customUnlockOverlays];
+		}
+	}
+}
+
+- (void)updateCustomUnlockWithSpaces:(NSArray<DJICustomUnlockZone *> * _Nullable)spaceInfos andEnabledZone:(DJICustomUnlockZone *)enabledZone
+{
+	if (spaceInfos && spaceInfos.count > 0) {
+		NSMutableArray *overlays = [NSMutableArray array];
+		
+		for (int i = 0; i < spaceInfos.count; i++) {
+			DJICustomUnlockZone *flyZoneLimitInfo = [spaceInfos objectAtIndex:i];
+			DJICustomUnlockOverlay *aOverlay = nil;
+			for (DJICustomUnlockOverlay *aCustomUnlockOverlay in _customUnlockOverlays) {
+				if (aCustomUnlockOverlay.customUnlockInformation.ID == flyZoneLimitInfo.ID) {
+					//&& aCustomUnlockOverlay.CustomUnlockInformation.license.enabled == flyZoneLimitInfo.license.enabled) {
+					aOverlay = aCustomUnlockOverlay;
+					break;
+				}
+			}
+			if (!aOverlay) {
+				//TODO
+				BOOL enabled = [flyZoneLimitInfo isEqual:enabledZone];
+				aOverlay = [[DJICustomUnlockOverlay alloc] initWithCustomUnlockInformation:flyZoneLimitInfo andEnabled:enabled];
+			}
+			[overlays addObject:aOverlay];
+		}
+		[self removeCustomUnlockOverlays:self.customUnlockOverlays];
+		[self addCustomUnlockOverlays:overlays];
+	}
+}
+
 - (void)setMapType:(MKMapType)mapType
 {
     self.mapView.mapType = mapType;
@@ -271,6 +317,51 @@
             [self.mapView removeOverlays:overlays];
         });
     }
+}
+
+- (void)addCustomUnlockOverlays:(NSArray *)objects
+{
+	if (objects.count <= 0) {
+		return;
+	}
+	NSMutableArray *overlays = [NSMutableArray array];
+	for (DJIMapOverlay *aMapOverlay in objects) {
+		for (id<MKOverlay> aOverlay in aMapOverlay.subOverlays) {
+			[overlays addObject:aOverlay];
+		}
+	}
+	
+	if ([NSThread isMainThread]) {
+		[self.customUnlockOverlays addObjectsFromArray:objects];
+		[self.mapView addOverlays:overlays];
+	} else {
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[self.customUnlockOverlays addObjectsFromArray:objects];
+			[self.mapView addOverlays:overlays];
+		});
+	}
+}
+
+- (void)removeCustomUnlockOverlays:(NSArray *)objects
+{
+	if (objects.count <= 0) {
+		return;
+	}
+	NSMutableArray *overlays = [NSMutableArray array];
+	for (DJIMapOverlay *aMapOverlay in objects) {
+		for (id<MKOverlay> aOverlay in aMapOverlay.subOverlays) {
+			[overlays addObject:aOverlay];
+		}
+	}
+	if ([NSThread isMainThread]) {
+		[self.customUnlockOverlays removeObjectsInArray:objects];
+		[self.mapView removeOverlays:overlays];
+	} else {
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[self.customUnlockOverlays removeObjectsInArray:objects];
+			[self.mapView removeOverlays:overlays];
+		});
+	}
 }
 
 - (void)refreshMapViewRegion

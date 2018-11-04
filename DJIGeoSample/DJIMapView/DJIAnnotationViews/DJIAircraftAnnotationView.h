@@ -1,9 +1,8 @@
 //
 //  DJIAircraftAnnotationView.h
-//  DJISdkDemo
+//  DJIGeoSample
 //
-//  Created by DJI on 15/4/27.
-//  Copyright (c) 2015 DJI. All rights reserved.
+//  Copyright © 2015 DJI. All rights reserved.
 //
 
 #import <MapKit/MapKit.h>

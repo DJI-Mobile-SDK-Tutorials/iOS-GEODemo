@@ -1,9 +1,8 @@
 //
 //  DJILimitSpaceOverlay.m
-//  Phantom3
+//  DJIGeoSample
 //
-//  Created by DJISoft on 2017/1/19.
-//  Copyright © 2017年 DJIDevelopers.com. All rights reserved.
+//  Copyright © 2017 DJI. All rights reserved.
 //
 
 #import "DJILimitSpaceOverlay.h"
@@ -57,7 +56,6 @@
             CLLocationCoordinate2D coordinate = [aPointValue MKCoordinateValue];
             CLLocationCoordinate2D coordinateInMap = coordinate;
             coordinates[i] = coordinateInMap;
-            NSLog(@"coordiantes: %lf, %lf", coordinate.latitude, coordinate.longitude);
         }
         DJIMapPolygon *polygon = [DJIMapPolygon polygonWithCoordinates:coordinates count:aSpace.vertices.count];
         polygon.lineWidth = [self strokLineWidthWithHeight:aSpace.maximumFlightHeight];

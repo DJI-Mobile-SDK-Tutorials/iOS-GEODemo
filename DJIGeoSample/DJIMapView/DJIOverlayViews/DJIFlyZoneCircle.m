@@ -1,8 +1,7 @@
 //
 //  DJIFlyZoneCircle.m
 //
-//  Created by Ares on 14-4-28.
-//  Copyright (c) 2014年 Sachsen & DJI. All rights reserved.
+//  Copyright © 2014 DJI. All rights reserved.
 //
 
 #import "DJIFlyZoneCircle.h"

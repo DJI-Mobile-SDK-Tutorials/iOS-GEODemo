@@ -1,9 +1,8 @@
 //
 //  DJIMapPolygon.h
-//  Phantom3
+//  DJIGeoSample
 //
-//  Created by sunny.li on 17/2/9.
-//  Copyright © 2017年 DJIDevelopers.com. All rights reserved.
+//  Copyright © 2017 DJI. All rights reserved.
 //
 
 #import <MapKit/MapKit.h>

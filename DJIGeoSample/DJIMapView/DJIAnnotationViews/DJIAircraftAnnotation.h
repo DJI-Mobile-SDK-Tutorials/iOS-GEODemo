@@ -1,9 +1,8 @@
 //
 //  DJIAircraftAnnotation.h
-//  Phantom3
+//  DJIGeoSample
 //
-//  Created by Ares on 14-8-21.
-//  Copyright (c) 2014年 Jerome.zhang. All rights reserved.
+//  Copyright © 2014 DJI. All rights reserved.
 //
 
 #import <MapKit/MapKit.h>

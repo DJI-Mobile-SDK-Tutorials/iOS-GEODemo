@@ -1,9 +1,8 @@
 //
 //  DJIFlyLimitPolygonView.h
-//  Phantom3
+//  DJIGeoSample
 //
-//  Created by tony on 8/8/16.
-//  Copyright © 2016 DJIDevelopers.com. All rights reserved.
+//  Copyright © 2016 DJI. All rights reserved.
 //
 
 #import <MapKit/MapKit.h>

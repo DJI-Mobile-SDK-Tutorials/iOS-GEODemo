@@ -2,7 +2,6 @@
 //  DJIGeoCustomUnlockingViewController.m
 //  DJIGeoSample
 //
-//  Created by DJI on 3/1/18.
 //  Copyright © 2018 DJI. All rights reserved.
 //
 
@@ -33,15 +32,23 @@
 
 - (void)loadCustomUnlockInfo {
 	WeakRef(target);
-	
-	[[DJISDKManager flyZoneManager] syncUnlockedZoneGroupToAircraftWithCompletion:^(NSError * _Nullable error) {
-		WeakReturn(target);
-		if (!error) {
-			target.customUnlockZones = [[DJISDKManager flyZoneManager] getCustomUnlockZonesFromAircraft];
-			[target.customUnlockedZonesTableView reloadData];
-		}
-	}];
+	NSString* modeName = [DJISDKManager product].model;
+	if ([modeName isEqualToString:DJIAircraftModelNameInspire1] ||
+		[modeName isEqualToString:DJIAircraftModelNamePhantom3Professional] ||
+		[modeName isEqualToString:DJIAircraftModelNameMatrice100]) {
+		target.customUnlockZones = [[DJISDKManager flyZoneManager] getCustomUnlockZonesFromAircraft];
+		[target.customUnlockedZonesTableView reloadData];
+	} else {
+		[[DJISDKManager flyZoneManager] syncUnlockedZoneGroupToAircraftWithCompletion:^(NSError * _Nullable error) {
+			WeakReturn(target);
+			if (!error) {
+				target.customUnlockZones = [[DJISDKManager flyZoneManager] getCustomUnlockZonesFromAircraft];
+				[target.customUnlockedZonesTableView reloadData];
+			}
+		}];
+	}
 }
+
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomUnlock"];

@@ -1,9 +1,8 @@
 //
 //  DJICircle.h
-//  Phantom3
+//  DJIGeoSample
 //
-//  Created by sunny.li on 15/7/24.
-//  Copyright (c) 2015年 DJIDevelopers.com. All rights reserved.
+//  Copyright © 2015 DJI. All rights reserved.
 //
 
 #import <MapKit/MapKit.h>

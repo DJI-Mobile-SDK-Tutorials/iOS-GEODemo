@@ -1,9 +1,8 @@
 //
 //  DJIMapOverlay.h
-//  Phantom3
+//  DJIGeoSample
 //
-//  Created by DJISoft on 2017/1/19.
-//  Copyright © 2017年 DJIDevelopers.com. All rights reserved.
+//  Copyright © 2017 DJI. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

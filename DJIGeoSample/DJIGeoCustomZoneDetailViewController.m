@@ -2,7 +2,6 @@
 //  DJIGeoCustomZoneDetailViewController.m
 //  DJIGeoSample
 //
-//  Created by DJI on 3/1/18.
 //  Copyright © 2018 DJI. All rights reserved.
 //
 
@@ -19,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *endLabel;
 @property (weak, nonatomic) IBOutlet UILabel *expiredLabel;
 @property (weak, nonatomic) IBOutlet UIButton *enableZoneButton;
-
+@property (strong, nonatomic) DJICustomUnlockZone *enabledCustomUnlockZone;
 @end
 
 @implementation DJIGeoCustomZoneDetailViewController
@@ -45,12 +44,13 @@
             if (!error) {
                 if (zone && zone.ID == target.customUnlockZone.ID) {
                     target.enableZoneButton.titleLabel.text = @"Disable";
+                    target.enabledCustomUnlockZone = zone;
                 } else {
                     target.enableZoneButton.titleLabel.text = @"Enable Zone";
                 }
                 target.enableZoneButton.enabled = YES;
             } else {
-                NSLog(@"Error: %@",error.description);
+                ShowResult(@"get enabled custom ulock zone failed:%@", error.description);
             }
         }];
     }
@@ -63,14 +63,26 @@
 
 - (IBAction)enableZoneButtonPressed:(id)sender {
     WeakRef(target);
-    [[DJISDKManager flyZoneManager] enableCustomUnlockZone:self.customUnlockZone withCompletion:^(NSError * _Nullable error) {
-        WeakReturn(target);
-        if (!error) {
-            target.enableZoneButton.titleLabel.text = @"Disable";
-        } else {
-            NSLog(@"Error: %@",error.description);
-        }
-    }];
+    if (self.enabledCustomUnlockZone) {
+        [[DJISDKManager flyZoneManager] enableCustomUnlockZone:nil withCompletion:^(NSError * _Nullable error) {
+            if (error) {
+                ShowResult(@"Disable custom unlock zone failed:%@", error.description);
+            } else {
+                ShowResult(@"Disable custom unlock zone succeed");
+            }
+        }];
+    } else {
+        [[DJISDKManager flyZoneManager] enableCustomUnlockZone:self.customUnlockZone withCompletion:^(NSError * _Nullable error) {
+            WeakReturn(target);
+            if (!error) {
+                target.enableZoneButton.titleLabel.text = @"Disable";
+                target.enabledCustomUnlockZone = self.customUnlockZone;
+                ShowResult(@"Enable custom unlock zone success");
+            } else {
+                ShowResult(@"Enable custom unlock zone Error: %@",error.description);
+            }
+        }];
+    }
 }
 
 @end

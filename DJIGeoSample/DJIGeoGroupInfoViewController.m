@@ -2,7 +2,6 @@
 //  DJIGeoGroupInfoViewController.m
 //  DJIGeoSample
 //
-//  Created by DJI on 26/04/2018.
 //  Copyright © 2018 DJI. All rights reserved.
 //
 
@@ -95,7 +94,6 @@
         [infoString appendString:[NSString stringWithFormat:@"isExpired:%@\n", customUnlockZone.isExpired ? @"YES":@"NO"]];
     }
     NSString *result = [NSString stringWithString:infoString];
-    NSLog(@"%@", result);
     return result;
 }
 
@@ -119,7 +117,6 @@
         }
     }
     NSString *result = [NSString stringWithString:infoString];
-    NSLog(@"%@", result);
     return result;
 }
 

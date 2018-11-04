@@ -1,9 +1,8 @@
 //
 //  DJIScrollView.h
-//  DJISdkDemo
+//  DJIGeoSample
 //
-//  Created by DJI on 16/2/29.
-//  Copyright © 2016年 DJI. All rights reserved.
+//  Copyright © 2016 DJI. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
