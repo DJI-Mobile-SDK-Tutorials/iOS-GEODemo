@@ -43,10 +43,10 @@
             WeakReturn(target);
             if (!error) {
                 if (zone && zone.ID == target.customUnlockZone.ID) {
-                    target.enableZoneButton.titleLabel.text = @"Disable";
+					[target.enableZoneButton setTitle:@"Disable" forState:UIControlStateNormal];
                     target.enabledCustomUnlockZone = zone;
                 } else {
-                    target.enableZoneButton.titleLabel.text = @"Enable Zone";
+					[target.enableZoneButton setTitle:@"Enable Zone" forState:UIControlStateNormal];
                 }
                 target.enableZoneButton.enabled = YES;
             } else {
@@ -68,6 +68,8 @@
             if (error) {
                 ShowResult(@"Disable custom unlock zone failed:%@", error.description);
             } else {
+				[target.enableZoneButton setTitle:@"Enable Zone" forState:UIControlStateNormal];
+				target.enabledCustomUnlockZone = nil;
                 ShowResult(@"Disable custom unlock zone succeed");
             }
         }];
@@ -75,7 +77,7 @@
         [[DJISDKManager flyZoneManager] enableCustomUnlockZone:self.customUnlockZone withCompletion:^(NSError * _Nullable error) {
             WeakReturn(target);
             if (!error) {
-                target.enableZoneButton.titleLabel.text = @"Disable";
+				[target.enableZoneButton setTitle:@"Disable" forState:UIControlStateNormal];
                 target.enabledCustomUnlockZone = self.customUnlockZone;
                 ShowResult(@"Enable custom unlock zone success");
             } else {

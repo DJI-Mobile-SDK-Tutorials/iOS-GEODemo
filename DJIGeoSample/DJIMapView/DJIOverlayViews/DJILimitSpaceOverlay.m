@@ -10,6 +10,7 @@
 #import "DJICircle.h"
 #import "DJIMapPolygon.h"
 #import "DJIFlyZoneCircle.h"
+#import "DJIFlyZoneColorProvider.h"
 #define kDJILimitFlightSpaceBufferHeight (5)
 
 @interface DJILimitSpaceOverlay()
@@ -33,14 +34,14 @@
 
 - (NSArray<id<MKOverlay>> *)overlysForSubFlyZoneSpace:(DJISubFlyZoneInformation *)aSpace
 {
-       
+	BOOL isHeightLimit = aSpace.maximumFlightHeight > 0 && aSpace.maximumFlightHeight < UINT16_MAX;
     if (aSpace.shape == DJISubFlyZoneShapeCylinder) {
         CLLocationCoordinate2D coordinateInMap = aSpace.center;
         DJICircle *circle = [DJICircle circleWithCenterCoordinate:coordinateInMap
                                                            radius:aSpace.radius];
         circle.lineWidth = [self strokLineWidthWithHeight:aSpace.maximumFlightHeight];
-        circle.fillColor = [self fillColorForLimitHeight:aSpace.maximumFlightHeight];
-        circle.strokeColor = [self strokColorForLimitHeight:aSpace.maximumFlightHeight];
+        circle.fillColor = [DJIFlyZoneColorProvider getFlyZoneOverlayColorWithCategory:_limitSpaceInfo.category isHeightLimit:isHeightLimit isFill:YES];
+        circle.strokeColor = [DJIFlyZoneColorProvider getFlyZoneOverlayColorWithCategory:_limitSpaceInfo.category isHeightLimit:isHeightLimit isFill:NO];
         return @[circle];
 
     } else if(aSpace.shape == DJISubFlyZoneShapePolygon) {
@@ -59,8 +60,8 @@
         }
         DJIMapPolygon *polygon = [DJIMapPolygon polygonWithCoordinates:coordinates count:aSpace.vertices.count];
         polygon.lineWidth = [self strokLineWidthWithHeight:aSpace.maximumFlightHeight];
-        polygon.strokeColor = [self strokColorForLimitHeight:aSpace.maximumFlightHeight];
-        polygon.fillColor = [self fillColorForLimitHeight:aSpace.maximumFlightHeight];
+        polygon.strokeColor = [DJIFlyZoneColorProvider getFlyZoneOverlayColorWithCategory:_limitSpaceInfo.category isHeightLimit:isHeightLimit isFill:NO];;
+        polygon.fillColor = [DJIFlyZoneColorProvider getFlyZoneOverlayColorWithCategory:_limitSpaceInfo.category isHeightLimit:isHeightLimit isFill:YES];;
         free(coordinates);
         return @[polygon];
     }
@@ -80,6 +81,7 @@
         circle.category = aSpace.category;
         circle.flyZoneID = aSpace.flyZoneID;
         circle.name = aSpace.name;
+		circle.limitHeight = 0;
         return @[circle];
     } else {
         NSMutableArray *results = [NSMutableArray array];
@@ -98,32 +100,6 @@
     self.subOverlays = [NSMutableArray array];
     NSArray *overlays = [self overlysForFlyZoneSpace:self.limitSpaceInfo];
     [self.subOverlays addObjectsFromArray:overlays];
-}
-
-- (UIColor *)strokColorForLimitHeight:(NSInteger)height
-{
-    if (height <= 0 + kDJILimitFlightSpaceBufferHeight) {
-        return nil;
-    } else if (height <= 30 + kDJILimitFlightSpaceBufferHeight) {
-        return nil;
-    }else if (height <= 60 + kDJILimitFlightSpaceBufferHeight) {
-        return UIColorFromRGBA(0x000000, 0.4);
-    }
-    
-    return UIColorFromRGBA(0x000000, 0.4);
-}
-
-- (UIColor *)fillColorForLimitHeight:(NSInteger)height
-{
-    if (height <= 0 + kDJILimitFlightSpaceBufferHeight) {
-        return UIColorFromRGBA(0xE70102, 0.4);
-    } else if (height <= 30 + kDJILimitFlightSpaceBufferHeight) {
-        return UIColorFromRGBA(0xE70102, 0.2);
-    }else if (height <= 60 + kDJILimitFlightSpaceBufferHeight) {
-        return UIColorFromRGBA(0x000000, 0.2);
-    }
-    
-    return UIColorFromRGBA(0x000000, 0.1);
 }
 
 -(CGFloat)strokLineWidthWithHeight:(NSInteger)height

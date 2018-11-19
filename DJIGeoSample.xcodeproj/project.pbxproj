@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1449B32720917944003955AE /* DJIGeoUnlockingGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1449B32620917944003955AE /* DJIGeoUnlockingGroupViewController.m */; };
 		1449B32E2091832D003955AE /* DJIGeoGroupInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1449B32D2091832D003955AE /* DJIGeoGroupInfoViewController.m */; };
+		144D11C1219C28480085C2A1 /* DJIFlyZoneColorProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 144D11C0219C28480085C2A1 /* DJIFlyZoneColorProvider.m */; };
 		146C3C4E217B0327000B589E /* DJICustomUnlockOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 146C3C4C217B0327000B589E /* DJICustomUnlockOverlay.m */; };
 		166D6BA2D6E9D4FC33F80FDD /* libPods-DJIGeoSample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F55FA2AEF9EEEB631917769 /* libPods-DJIGeoSample.a */; };
 		246F1AB42047E9640038B95D /* DJIGeoCustomUnlockingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 246F1AB32047E9640038B95D /* DJIGeoCustomUnlockingViewController.m */; };
@@ -55,6 +56,8 @@
 		1449B32620917944003955AE /* DJIGeoUnlockingGroupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJIGeoUnlockingGroupViewController.m; sourceTree = "<group>"; };
 		1449B32C2091832D003955AE /* DJIGeoGroupInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJIGeoGroupInfoViewController.h; sourceTree = "<group>"; };
 		1449B32D2091832D003955AE /* DJIGeoGroupInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJIGeoGroupInfoViewController.m; sourceTree = "<group>"; };
+		144D11BF219C28480085C2A1 /* DJIFlyZoneColorProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJIFlyZoneColorProvider.h; sourceTree = "<group>"; };
+		144D11C0219C28480085C2A1 /* DJIFlyZoneColorProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DJIFlyZoneColorProvider.m; sourceTree = "<group>"; };
 		146C3C4C217B0327000B589E /* DJICustomUnlockOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJICustomUnlockOverlay.m; sourceTree = "<group>"; };
 		146C3C4D217B0327000B589E /* DJICustomUnlockOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJICustomUnlockOverlay.h; sourceTree = "<group>"; };
 		1E337176DA7FBD1E2C722E3D /* Pods-DJIGeoSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DJIGeoSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DJIGeoSample/Pods-DJIGeoSample.debug.xcconfig"; sourceTree = "<group>"; };
@@ -248,6 +251,8 @@
 				A4B87F081D2A75B500123466 /* DJIFlyZoneCircle.m */,
 				A4B87F091D2A75B500123466 /* DJIFlyZoneCircleView.h */,
 				A4B87F0A1D2A75B500123466 /* DJIFlyZoneCircleView.m */,
+				144D11BF219C28480085C2A1 /* DJIFlyZoneColorProvider.h */,
+				144D11C0219C28480085C2A1 /* DJIFlyZoneColorProvider.m */,
 			);
 			path = DJIOverlayViews;
 			sourceTree = "<group>";
@@ -265,6 +270,7 @@
 				A4B87EC71D2A6EB600123466 /* Resources */,
 				A4B87EF31D2A716200123466 /* Embed Frameworks */,
 				B875BB0DF8588133AAFA9AE1 /* [CP] Embed Pods Frameworks */,
+				39ED9500442B13D051610C54 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -343,7 +349,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		39ED9500442B13D051610C54 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DJIGeoSample/Pods-DJIGeoSample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B875BB0DF8588133AAFA9AE1 /* [CP] Embed Pods Frameworks */ = {
@@ -378,6 +399,7 @@
 				A446D0E41D3F7DB400804A32 /* DJIAircraftAnnotationView.m in Sources */,
 				A4B87F0E1D2A75B500123466 /* DJIMapViewController.m in Sources */,
 				146C3C4E217B0327000B589E /* DJICustomUnlockOverlay.m in Sources */,
+				144D11C1219C28480085C2A1 /* DJIFlyZoneColorProvider.m in Sources */,
 				A437B31F1E7AA50F0089C965 /* DJICircle.m in Sources */,
 				1449B32720917944003955AE /* DJIGeoUnlockingGroupViewController.m in Sources */,
 				A437B3241E7AA50F0089C965 /* DJIPolygon.m in Sources */,

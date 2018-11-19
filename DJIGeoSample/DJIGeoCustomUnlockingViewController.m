@@ -44,7 +44,9 @@
 			if (!error) {
 				target.customUnlockZones = [[DJISDKManager flyZoneManager] getCustomUnlockZonesFromAircraft];
 				[target.customUnlockedZonesTableView reloadData];
-			}
+            } else {
+                ShowResult(@"Sync custom unlock zones to aircraft failed: %@", error.description);
+            }
 		}];
 	}
 }

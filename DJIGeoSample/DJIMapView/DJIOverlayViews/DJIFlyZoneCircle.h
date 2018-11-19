@@ -14,5 +14,6 @@
 @property (nonatomic, assign) uint8_t category;
 @property (nonatomic, assign) NSUInteger flyZoneID;
 @property (nonatomic, copy) NSString* name;
+@property (nonatomic, assign) CGFloat limitHeight;
 
 @end
